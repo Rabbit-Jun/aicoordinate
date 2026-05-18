@@ -4,8 +4,7 @@ type PublicEnv = {
   amplitudeApiKey: string;
 };
 
-function readRequired(name: string): string {
-  const value = process.env[name];
+function required(name: string, value: string | undefined): string {
   if (!value) {
     throw new Error(
       `환경변수 ${name} 가 설정되지 않았습니다. .env.local 또는 Vercel 환경변수를 확인하세요.`,
@@ -14,10 +13,21 @@ function readRequired(name: string): string {
   return value;
 }
 
+// Next.js는 NEXT_PUBLIC_* 변수를 빌드 시점에 정적 대체한다.
+// 정적 접근(process.env.NEXT_PUBLIC_FOO)만 inline되므로 동적 키 접근(process.env[name])은 금지.
 export function getPublicEnv(): PublicEnv {
   return {
-    supabaseUrl: readRequired("NEXT_PUBLIC_SUPABASE_URL"),
-    supabaseAnonKey: readRequired("NEXT_PUBLIC_SUPABASE_ANON_KEY"),
-    amplitudeApiKey: readRequired("NEXT_PUBLIC_AMPLITUDE_API_KEY"),
+    supabaseUrl: required(
+      "NEXT_PUBLIC_SUPABASE_URL",
+      process.env.NEXT_PUBLIC_SUPABASE_URL,
+    ),
+    supabaseAnonKey: required(
+      "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    ),
+    amplitudeApiKey: required(
+      "NEXT_PUBLIC_AMPLITUDE_API_KEY",
+      process.env.NEXT_PUBLIC_AMPLITUDE_API_KEY,
+    ),
   };
 }
