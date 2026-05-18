@@ -31,18 +31,24 @@ export async function joinWaitlist(
     return { status: "invalid_email" };
   }
 
-  const supabase = getSupabaseClient();
-  const { error } = await supabase.from("waitlist").insert({
-    email,
-    source: input.source ?? null,
-    referrer: input.referrer ?? null,
-    user_agent: input.userAgent ?? null,
-  });
+  try {
+    const supabase = getSupabaseClient();
+    const { error } = await supabase.from("waitlist").insert({
+      email,
+      source: input.source ?? null,
+      referrer: input.referrer ?? null,
+      user_agent: input.userAgent ?? null,
+    });
 
-  if (!error) return { status: "ok" };
+    if (!error) return { status: "ok" };
 
-  // Postgres unique_violation
-  if (error.code === "23505") return { status: "duplicate" };
+    // Postgres unique_violation
+    if (error.code === "23505") return { status: "duplicate" };
 
-  return { status: "error", message: error.message };
+    return { status: "error", message: error.message };
+  } catch (e) {
+    // 환경변수 누락 등 클라이언트 생성 자체가 실패한 경우
+    const message = e instanceof Error ? e.message : "알 수 없는 오류";
+    return { status: "error", message };
+  }
 }
