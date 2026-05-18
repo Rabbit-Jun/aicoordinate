@@ -1,4 +1,4 @@
-import * as amplitude from "@amplitude/analytics-browser";
+import * as amplitude from "@amplitude/unified";
 import { getPublicEnv } from "./env";
 
 export type AnalyticsEvent =
@@ -14,8 +14,10 @@ export function initAnalytics(): void {
   if (initialized || typeof window === "undefined") return;
   try {
     const env = getPublicEnv();
-    amplitude.init(env.amplitudeApiKey, {
-      autocapture: { pageViews: true, sessions: true },
+    // initAll은 Promise를 반환하지만 SDK가 내부적으로 이벤트 큐잉을 처리하므로 await 불필요.
+    amplitude.initAll(env.amplitudeApiKey, {
+      analytics: { autocapture: true },
+      sessionReplay: { sampleRate: 1 },
     });
     initialized = true;
   } catch (e) {

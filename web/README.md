@@ -4,7 +4,7 @@ AI 코디 서비스의 가설 검증용 랜딩 페이지.
 
 - **Next.js 14** (App Router) + TypeScript + Tailwind CSS
 - **Supabase**: 베타 대기열 이메일 저장
-- **Amplitude**: 페이지뷰/CTA 클릭/폼 제출 트래킹
+- **Amplitude (Unified SDK)**: 페이지뷰/CTA 클릭/폼 제출 트래킹 + Session Replay
 - **Vercel**: 정적/SSR 배포 타겟
 
 ## 디렉터리
@@ -46,9 +46,11 @@ RLS로 anon 키는 INSERT만 가능 — 클라이언트가 키를 들고 있어�
 
 ## Amplitude 설정
 
-1. [amplitude.com](https://amplitude.com)에서 프로젝트 생성.
-2. **Settings > General > API Keys**의 API Key를
-   `NEXT_PUBLIC_AMPLITUDE_API_KEY`에 채움.
+1. [amplitude.com](https://amplitude.com)에서 프로젝트 생성 (기본 default 프로젝트로 충분).
+2. **Settings > Projects > (해당 프로젝트) > General**의 **API Key**를
+   `NEXT_PUBLIC_AMPLITUDE_API_KEY`에 채움. (Secret Key 아님 주의)
+3. Session Replay는 [src/lib/analytics.ts](src/lib/analytics.ts)에서 `sampleRate: 1`로
+   100% 녹화 중. 트래픽이 늘어나면 0.1(10%) 등으로 낮추세요.
 
 트래킹 이벤트:
 
