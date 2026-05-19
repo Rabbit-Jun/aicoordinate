@@ -14,7 +14,7 @@ export function Waitlist() {
             </h2>
             <p className="mt-4 text-base sm:text-lg text-muted text-pretty">
               이메일을 남겨주시면, 베타 슬롯이 열리는 대로 가장 먼저
-              안내드립니다. 초기 사용자에게는 무료 사용권과 함께 직접 코디
+              안내드립니다.<br/> 초기 사용자에게는 무료 사용권과 함께 직접 코디
               결과를 만들어드려요.
             </p>
             <ul className="mt-6 space-y-2 text-sm text-muted">
