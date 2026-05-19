@@ -13,11 +13,16 @@ const config: Config = {
         foreground: "var(--foreground)",
         muted: "var(--muted)",
         surface: "var(--surface)",
+        "surface-warm": "var(--surface-warm)",
         border: "var(--border)",
         accent: {
           DEFAULT: "var(--accent)",
           foreground: "var(--accent-foreground)",
         },
+        secondary: "var(--secondary)",
+        success: "var(--success)",
+        dark: "var(--dark)",
+        "dark-accent": "var(--dark-accent)",
       },
       fontFamily: {
         sans: [

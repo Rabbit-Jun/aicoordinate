@@ -5,13 +5,25 @@
 @tailwind utilities;
 
 :root {
-  --background: #fafafa;
-  --foreground: #0a0a0a;
-  --muted: #6b7280;
-  --surface: #ffffff;
-  --border: #e5e7eb;
-  --accent: #6366f1;
+  /* Base — warm 무드 */
+  --background: #fff6f1;       /* 페이지 기본 (warm light) */
+  --foreground: #1a1410;       /* 메인 텍스트 (warm dark) */
+  --muted: #7a6e66;            /* 보조 텍스트 (warm gray) */
+  --surface: #fffef0;          /* 카드·대비 배경 (cream) */
+  --surface-warm: #fdeae0;     /* Hero 배경 강조 (peach) */
+  --border: #ebded4;           /* 경계선 (warm border) */
+
+  /* Accent — 주 CTA·강조 */
+  --accent: #e73349;           /* 체리 레드 */
   --accent-foreground: #ffffff;
+
+  /* Secondary — 보조 강조·긍정 */
+  --secondary: #0090b2;        /* 본디 블루 */
+  --success: #12c385;          /* 긍정 액션 */
+
+  /* Dark — CTA·Pain B 배경 */
+  --dark: #1a1410;             /* warm-dark */
+  --dark-accent: #2a1f1a;      /* Pain B 다크 배경 */
 }
 
 html {
