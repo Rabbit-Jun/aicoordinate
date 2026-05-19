@@ -5,7 +5,7 @@ export function Waitlist() {
     <section id="waitlist" className="border-t border-border overflow-hidden">
       <div className="mx-auto max-w-6xl px-6 py-24 sm:py-28">
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
-          <div>
+          <div className="min-w-0">
             <p className="text-sm font-medium text-accent">베타 대기열</p>
             <h2 className="mt-3 text-3xl sm:text-4xl font-bold tracking-tight text-balance">
               먼저 써 보고,
@@ -24,7 +24,7 @@ export function Waitlist() {
             </ul>
           </div>
 
-          <div className="flex lg:justify-end">
+          <div className="flex lg:justify-end min-w-0">
             <WaitlistForm />
           </div>
         </div>
