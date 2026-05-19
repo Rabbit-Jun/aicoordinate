@@ -60,20 +60,45 @@ export function Hero() {
 
 function HeroPreview() {
   return (
-    <div className="grid grid-cols-2 gap-4">
-      <WardrobeTile />
-      <AiOutfitTile />
-      <SingleImageTile
-        src="/mockup/model-before.jpg"
-        alt="합성 전 사용자 사진"
-        label="내 사진"
-      />
-      <SingleImageTile
-        src="/mockup/model-after.png"
-        alt="AI 합성 결과"
-        label="합성 결과"
-        accent
-      />
+    <div className="grid grid-cols-2 gap-x-4 gap-y-6">
+      <PreviewItem caption="내 옷장의 옷을 사진으로 간단하게 저장해 주세요.">
+        <WardrobeTile />
+      </PreviewItem>
+      <PreviewItem caption="AI가 옷장의 옷을 조합해, 가장 어울리는 코디를 추천해 줘요.">
+        <AiOutfitTile />
+      </PreviewItem>
+      <PreviewItem caption="전신 사진을 올려주시면, AI가 미리 옷을 입은 모습을 보여줘요.">
+        <SingleImageTile
+          src="/mockup/model-before.jpg"
+          alt="합성 전 사용자 사진"
+          label="내 사진"
+        />
+      </PreviewItem>
+      <PreviewItem caption="옷을 갈아입는 시간을 아끼고, 원하는 옷을 빠르게.">
+        <SingleImageTile
+          src="/mockup/model-after.png"
+          alt="AI 합성 결과"
+          label="합성 결과"
+          accent
+        />
+      </PreviewItem>
+    </div>
+  );
+}
+
+function PreviewItem({
+  caption,
+  children,
+}: {
+  caption: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="flex flex-col gap-3">
+      {children}
+      <p className="text-xs sm:text-sm text-muted leading-relaxed px-1 text-pretty">
+        {caption}
+      </p>
     </div>
   );
 }
