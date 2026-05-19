@@ -14,6 +14,7 @@ const wardrobeItems: Item[] = [
 
 const aiOutfitItems: Item[] = [
   { src: "/mockup/jaket.png", alt: "자켓" },
+   { src: "/mockup/skarf.png", alt: "스카프" },
   { src: "/mockup/tee.png", alt: "티셔츠" },
   { src: "/mockup/jeen.png", alt: "진" },
 ];
