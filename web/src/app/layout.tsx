@@ -6,7 +6,7 @@ const siteTitle = "내 옷장으로 만드는 AI 코디";
 const siteDescription =
   "내 옷 사진을 올리면, AI가 어울리는 조합을 골라 내 모습에 합성해서 보여줍니다.";
 const ogImage = {
-  url: "/og",
+  url: "/og.png",
   width: 1200,
   height: 630,
   alt: "내 옷장으로, AI가 코디한다 — 베타 대기열 모집 중",
