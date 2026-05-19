@@ -1,4 +1,23 @@
+import Image from "next/image";
 import { HeroCTA } from "./HeroCTA";
+
+type Item = { src: string; alt: string };
+
+const wardrobeItems: Item[] = [
+  { src: "/mockup/jaket.png", alt: "자켓" },
+  { src: "/mockup/navy-blouse.png", alt: "네이비 블라우스" },
+  { src: "/mockup/navy-trousers.png", alt: "네이비 트라우저" },
+  { src: "/mockup/tweed-jaket.png", alt: "트위드 자켓" },
+  { src: "/mockup/jeen.png", alt: "진" },
+  { src: "/mockup/skarf.png", alt: "스카프" },
+  { src: "/mockup/tee.png", alt: "티셔츠" },
+];
+
+const aiOutfitItems: Item[] = [
+  { src: "/mockup/jaket.png", alt: "자켓" },
+  { src: "/mockup/tee.png", alt: "티셔츠" },
+  { src: "/mockup/jeen.png", alt: "진" },
+];
 
 export function Hero() {
   return (
@@ -41,33 +60,104 @@ export function Hero() {
 
 function HeroPreview() {
   return (
-    <div className="relative">
-      <div className="grid grid-cols-2 gap-4">
-        <PreviewTile label="내 옷장" tone="neutral" />
-        <PreviewTile label="AI 코디" tone="accent" />
-        <PreviewTile label="내 사진" tone="neutral" />
-        <PreviewTile label="합성 결과" tone="accent" />
-      </div>
+    <div className="grid grid-cols-2 gap-4">
+      <WardrobeTile />
+      <AiOutfitTile />
+      <SingleImageTile
+        src="/mockup/model-before.jpg"
+        alt="합성 전 사용자 사진"
+        label="내 사진"
+      />
+      <SingleImageTile
+        src="/mockup/model-after.png"
+        alt="AI 합성 결과"
+        label="합성 결과"
+        accent
+      />
     </div>
   );
 }
 
-function PreviewTile({
-  label,
-  tone,
-}: {
+type TileShellProps = {
   label: string;
-  tone: "neutral" | "accent";
-}) {
-  const palette =
-    tone === "accent"
-      ? "bg-gradient-to-br from-accent/20 to-accent/5 border-accent/20"
-      : "bg-surface border-border";
+  accent?: boolean;
+  children: React.ReactNode;
+};
+
+function TileShell({ label, accent, children }: TileShellProps) {
+  const palette = accent
+    ? "bg-gradient-to-br from-accent/15 to-accent/5 border-accent/20"
+    : "bg-surface border-border";
   return (
     <div
-      className={`aspect-[3/4] rounded-2xl border ${palette} flex items-end p-4`}
+      className={`aspect-[3/4] rounded-2xl border ${palette} p-3 flex flex-col gap-2 overflow-hidden`}
     >
-      <span className="text-sm font-medium text-foreground/70">{label}</span>
+      <span className="text-xs font-medium text-foreground/70 px-1">
+        {label}
+      </span>
+      <div className="flex-1 min-h-0">{children}</div>
     </div>
+  );
+}
+
+function WardrobeTile() {
+  return (
+    <TileShell label="내 옷장">
+      <div className="grid grid-cols-2 grid-rows-4 gap-1.5 h-full">
+        {wardrobeItems.map((item) => (
+          <ItemCell key={item.src} item={item} sizes="80px" />
+        ))}
+        <div className="rounded-md bg-foreground/5" aria-hidden />
+      </div>
+    </TileShell>
+  );
+}
+
+function AiOutfitTile() {
+  return (
+    <TileShell label="AI 코디" accent>
+      <div className="flex flex-col gap-1.5 h-full">
+        {aiOutfitItems.map((item) => (
+          <ItemCell key={item.src} item={item} sizes="180px" />
+        ))}
+      </div>
+    </TileShell>
+  );
+}
+
+function ItemCell({ item, sizes }: { item: Item; sizes: string }) {
+  return (
+    <div className="relative bg-white rounded-md overflow-hidden flex-1">
+      <Image
+        src={item.src}
+        alt={item.alt}
+        fill
+        sizes={sizes}
+        className="object-contain p-1.5"
+      />
+    </div>
+  );
+}
+
+type SingleImageTileProps = {
+  src: string;
+  alt: string;
+  label: string;
+  accent?: boolean;
+};
+
+function SingleImageTile({ src, alt, label, accent }: SingleImageTileProps) {
+  return (
+    <TileShell label={label} accent={accent}>
+      <div className="relative h-full rounded-md overflow-hidden bg-white">
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes="(min-width: 1024px) 280px, 45vw"
+          className="object-cover"
+        />
+      </div>
+    </TileShell>
   );
 }
