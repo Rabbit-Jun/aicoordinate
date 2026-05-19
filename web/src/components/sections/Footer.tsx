@@ -10,7 +10,7 @@ export function Footer() {
           <a href="/privacy" className="hover:text-foreground transition">
             개인정보처리방침
           </a>
-          <a href="mailto:hello@example.com" className="hover:text-foreground transition">
+          <a href="mailto:swns0414@gmail.com" className="hover:text-foreground transition">
             문의
           </a>
           <a href="#waitlist" className="hover:text-foreground transition">

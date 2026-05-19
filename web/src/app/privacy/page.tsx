@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 const effectiveDate = "2026년 5월 19일";
-const contactEmail = "hello@example.com"; // TODO: 운영 시작 전 실제 이메일로 교체
+const contactEmail = "swns0414@gmail.com"; // TODO: 운영 시작 전 실제 이메일로 교체
 
 export const metadata: Metadata = {
   title: "개인정보처리방침",
