@@ -29,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className="font-sans antialiased bg-background text-foreground">
+      <body className="font-sans antialiased bg-background text-foreground overflow-x-hidden">
         <AnalyticsProvider />
         {children}
       </body>

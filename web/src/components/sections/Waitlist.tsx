@@ -2,7 +2,7 @@ import { WaitlistForm } from "./WaitlistForm";
 
 export function Waitlist() {
   return (
-    <section id="waitlist" className="border-t border-border">
+    <section id="waitlist" className="border-t border-border overflow-hidden">
       <div className="mx-auto max-w-6xl px-6 py-24 sm:py-28">
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <div>
