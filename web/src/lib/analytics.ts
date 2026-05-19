@@ -6,7 +6,8 @@ export type AnalyticsEvent =
   | { name: "hero_cta_clicked"; props?: Record<string, unknown> }
   | { name: "waitlist_submit_attempt"; props?: Record<string, unknown> }
   | { name: "waitlist_submitted"; props?: Record<string, unknown> }
-  | { name: "waitlist_failed"; props: { reason: string } };
+  | { name: "waitlist_failed"; props: { reason: string } }
+  | { name: "hypothesis_variant_viewed"; props: { variant: "A" | "B" } };
 
 let initialized = false;
 

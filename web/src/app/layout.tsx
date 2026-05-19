@@ -13,6 +13,7 @@ const ogImage = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://aicoordinate.vercel.app"),
   title: siteTitle,
   description: siteDescription,
   openGraph: {

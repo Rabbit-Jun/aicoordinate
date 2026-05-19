@@ -89,7 +89,7 @@ type TileShellProps = {
 
 function TileShell({ label, accent, children }: TileShellProps) {
   const palette = accent
-    ? "bg-gradient-to-br from-accent/15 to-accent/5 border-accent/20"
+    ? "bg-gradient-to-br from-surface-warm to-surface border-accent/20"
     : "bg-background border-border";
   return (
     <div

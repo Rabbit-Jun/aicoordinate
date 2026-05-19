@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { track } from "@/lib/analytics";
+import { readUtmFromUrl, serializeUtmForStorage } from "@/lib/utm";
 import { joinWaitlist } from "@/lib/waitlist";
 
 type Status =
@@ -12,13 +13,19 @@ type Status =
   | { kind: "invalid" }
   | { kind: "error"; message: string };
 
-function readUtmSource(): string | null {
-  if (typeof window === "undefined") return null;
-  const params = new URLSearchParams(window.location.search);
-  return params.get("utm_source");
-}
+type Theme = "light" | "dark";
 
-export function WaitlistForm() {
+type Props = {
+  theme?: Theme;
+  ctaText?: string;
+  onSuccess?: () => void;
+};
+
+export function WaitlistForm({
+  theme = "light",
+  ctaText = "대기열 등록",
+  onSuccess,
+}: Props) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<Status>({ kind: "idle" });
 
@@ -31,7 +38,7 @@ export function WaitlistForm() {
 
     const result = await joinWaitlist({
       email,
-      source: readUtmSource(),
+      source: serializeUtmForStorage(readUtmFromUrl()),
       referrer: typeof document !== "undefined" ? document.referrer || null : null,
       userAgent: typeof navigator !== "undefined" ? navigator.userAgent : null,
     });
@@ -40,6 +47,7 @@ export function WaitlistForm() {
       case "ok":
         setStatus({ kind: "success" });
         track({ name: "waitlist_submitted" });
+        onSuccess?.();
         return;
       case "duplicate":
         setStatus({ kind: "duplicate" });
@@ -57,6 +65,15 @@ export function WaitlistForm() {
   }
 
   const isLocked = status.kind === "success" || status.kind === "submitting";
+  const isDark = theme === "dark";
+
+  const inputClass = isDark
+    ? "flex-1 rounded-full border border-white/20 bg-white/[0.06] px-5 py-3.5 text-base text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent disabled:opacity-60"
+    : "flex-1 rounded-full border border-border bg-background px-5 py-3.5 text-base placeholder:text-muted/70 focus:outline-none focus:ring-2 focus:ring-accent disabled:opacity-60";
+
+  const buttonClass = isDark
+    ? "rounded-full bg-accent text-accent-foreground px-6 py-3.5 text-base font-semibold transition-transform duration-150 will-change-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-dark active:translate-y-0 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+    : "rounded-full bg-foreground text-background px-6 py-3.5 text-base font-semibold transition hover:opacity-90 active:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed";
 
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-md">
@@ -79,27 +96,31 @@ export function WaitlistForm() {
             }
           }}
           disabled={isLocked}
-          className="flex-1 rounded-full border border-border bg-background px-5 py-3.5 text-base placeholder:text-muted/70 focus:outline-none focus:ring-2 focus:ring-accent disabled:opacity-60"
+          className={inputClass}
         />
         <button
           type="submit"
           disabled={isLocked || email.length === 0}
-          className="rounded-full bg-foreground text-background px-6 py-3.5 text-base font-semibold transition hover:opacity-90 active:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed"
+          className={buttonClass}
         >
-          {status.kind === "submitting" ? "등록 중…" : "대기열 등록"}
+          {status.kind === "submitting" ? "등록 중…" : ctaText}
         </button>
       </div>
-      <FormFeedback status={status} />
+      <FormFeedback status={status} theme={theme} />
     </form>
   );
 }
 
-function FormFeedback({ status }: { status: Status }) {
+function FormFeedback({ status, theme }: { status: Status; theme: Theme }) {
   if (status.kind === "idle" || status.kind === "submitting") return null;
 
-  const tone =
-    status.kind === "success" || status.kind === "duplicate"
-      ? "text-accent"
+  const isPositive = status.kind === "success" || status.kind === "duplicate";
+  const isDark = theme === "dark";
+
+  const tone = isPositive
+    ? "text-accent"
+    : isDark
+      ? "text-red-300"
       : "text-red-600";
 
   const message =
