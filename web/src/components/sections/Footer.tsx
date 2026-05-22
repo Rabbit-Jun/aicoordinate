@@ -13,9 +13,6 @@ export function Footer() {
           <a href="mailto:swns0414@gmail.com" className="hover:text-foreground transition">
             문의
           </a>
-          <a href="#waitlist" className="hover:text-foreground transition">
-            대기열 등록
-          </a>
         </nav>
       </div>
     </footer>
