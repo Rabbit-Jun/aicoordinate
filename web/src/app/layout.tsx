@@ -9,7 +9,7 @@ const ogImage = {
   url: "/og.png",
   width: 1200,
   height: 630,
-  alt: "내 옷장으로, AI가 코디한다 — 베타 대기열 모집 중",
+  alt: "내 옷장으로, AI가 코디한다",
 };
 
 export const metadata: Metadata = {

@@ -7,7 +7,8 @@ export type AnalyticsEvent =
   | { name: "waitlist_submit_attempt"; props?: Record<string, unknown> }
   | { name: "waitlist_submitted"; props?: Record<string, unknown> }
   | { name: "waitlist_failed"; props: { reason: string } }
-  | { name: "hypothesis_variant_viewed"; props: { variant: "A" | "B" } };
+  | { name: "pricing_poll_voted"; props: { choice: "yes" | "maybe" | "no" } }
+  | { name: "app_badge_clicked"; props: { platform: "ios" | "android" } };
 
 let initialized = false;
 

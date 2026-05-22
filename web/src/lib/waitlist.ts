@@ -5,6 +5,8 @@ export type WaitlistJoinInput = {
   source?: string | null;
   referrer?: string | null;
   userAgent?: string | null;
+  pricingIntent?: "yes" | "maybe" | "no" | null;
+  devicePref?: "ios" | "android" | null;
 };
 
 export type WaitlistJoinResult =
@@ -38,6 +40,8 @@ export async function joinWaitlist(
       source: input.source ?? null,
       referrer: input.referrer ?? null,
       user_agent: input.userAgent ?? null,
+      pricing_intent: input.pricingIntent ?? null,
+      device_pref: input.devicePref ?? null,
     });
 
     if (!error) return { status: "ok" };
