@@ -4,9 +4,9 @@ import "./globals.css";
 
 const siteTitle = "내 옷장으로 만드는 AI 코디";
 const siteDescription =
-  "내 옷 사진을 올리면, AI가 어울리는 조합을 골라 내 모습에 합성해서 보여줍니다.";
+  "내 옷장 옷으로 AI가 어울리는 코디를 찾아, 마네킹이 입은 모습으로 보여드려요.";
 const ogImage = {
-  url: "/og.png",
+  url: "/og.jpg",
   width: 1200,
   height: 630,
   alt: "내 옷장으로, AI가 코디한다",
