@@ -32,7 +32,7 @@ const RACK_STAGGER = [
 ] as const;
 
 const HERO_STATS = [
-  { value: "3가지", label: "매일 받는 새 조합 추천" },
+  { value: "5가지", label: "매월 받는 새 조합 추천" },
   { value: "0원", label: "옷 추가 구매" },
   { value: "30초", label: "가입부터 시작까지" },
 ] as const;
