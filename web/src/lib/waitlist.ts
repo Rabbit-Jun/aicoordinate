@@ -5,8 +5,9 @@ export type WaitlistJoinInput = {
   source?: string | null;
   referrer?: string | null;
   userAgent?: string | null;
-  pricingIntent?: "yes" | "maybe" | "no" | null;
-  devicePref?: "ios" | "android" | null;
+  // pricing_intent 컬럼은 재활용: yes/maybe/no → free/subscribe.
+  // device_pref 컬럼은 방치(앱배지 신호 폐기).
+  pricingIntent?: "free" | "subscribe" | null;
 };
 
 export type WaitlistJoinResult =
@@ -41,7 +42,6 @@ export async function joinWaitlist(
       referrer: input.referrer ?? null,
       user_agent: input.userAgent ?? null,
       pricing_intent: input.pricingIntent ?? null,
-      device_pref: input.devicePref ?? null,
     });
 
     if (!error) return { status: "ok" };

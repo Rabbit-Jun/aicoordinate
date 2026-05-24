@@ -1,8 +1,11 @@
-import { AppBadges } from "./AppBadges";
+"use client";
+
+import { track } from "@/lib/analytics";
+import { useEmailModal, type PlanChoice } from "../AppShell";
 
 const FREE_FEATURES: ReadonlyArray<string> = [
   "가입 선물 코디 10개 즉시",
-  "매달 무료 크레딧 1개 ",
+  "매달 무료 크레딧 1개",
   "내 옷장 100벌까지",
   "마네킹 코디 + 격자뷰",
 ];
@@ -14,6 +17,13 @@ const SUBSCRIPTION_EXTRAS: ReadonlyArray<string> = [
 ];
 
 export function Pricing() {
+  const { openModal } = useEmailModal();
+
+  function startPlan(plan: PlanChoice) {
+    track({ name: "plan_selected", props: { plan } });
+    openModal(plan);
+  }
+
   return (
     <section id="waitlist" className="bg-surface-warm">
       <div className="mx-auto max-w-3xl px-6 pt-24 pb-32 sm:pt-28 sm:pb-36">
@@ -30,12 +40,16 @@ export function Pricing() {
             price={null}
             highlighted
             features={FREE_FEATURES}
+            ctaLabel="무료로 시작하기"
+            onCta={() => startPlan("free")}
           />
           <PlanCard
             name="구독 요금제"
             price="월 3,900원"
             prefix="무료의 모든 기능 +"
             features={SUBSCRIPTION_EXTRAS}
+            ctaLabel="구독 시작하기"
+            onCta={() => startPlan("subscribe")}
           />
         </div>
 
@@ -48,13 +62,6 @@ export function Pricing() {
           <span className="font-semibold text-foreground">500원</span>{" "}
           — 무료·구독 상관없이 누구나 충전
         </p>
-
-        <div className="mt-10 flex flex-col items-center gap-3">
-          <p className="text-sm font-semibold text-foreground">
-            지금 시작하면 코디 10개 무료 🎁
-          </p>
-          <AppBadges />
-        </div>
       </div>
     </section>
   );
@@ -66,12 +73,16 @@ function PlanCard({
   highlighted = false,
   prefix,
   features,
+  ctaLabel,
+  onCta,
 }: {
   name: string;
   price: string | null;
   highlighted?: boolean;
   prefix?: string;
   features: ReadonlyArray<string>;
+  ctaLabel: string;
+  onCta: () => void;
 }) {
   return (
     <div
@@ -111,6 +122,25 @@ function PlanCard({
             </li>
           ))}
         </ul>
+        <button
+          type="button"
+          data-track="plan_selected"
+          onClick={onCta}
+          className={`
+            mt-6 w-full inline-flex items-center justify-center
+            rounded-full px-5 py-3 text-sm font-semibold
+            transition-transform duration-150 will-change-transform
+            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-white
+            hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]
+            ${
+              highlighted
+                ? "bg-accent text-accent-foreground"
+                : "bg-foreground text-background"
+            }
+          `}
+        >
+          {ctaLabel}
+        </button>
       </div>
     </div>
   );

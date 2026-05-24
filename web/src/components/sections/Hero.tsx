@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { AppBadges } from "./AppBadges";
+import type { ReactNode } from "react";
+import { HeroStartButton } from "./HeroStartButton";
 
 type Cody = { src: string; alt: string };
 
@@ -37,26 +38,42 @@ const HERO_STATS = [
   { value: "30초", label: "가입부터 시작까지" },
 ] as const;
 
-export function Hero() {
+const DEFAULT_HEADLINE: ReactNode = (
+  <>
+    <span className="text-accent">내 옷장</span>에{" "}
+    <span className="text-accent">100벌</span> 있는데,
+    <br />
+    매일 똑같은 옷만?
+  </>
+);
+
+const DEFAULT_SUBHEADLINE =
+  "있는 옷도 조합이 어려운 건, 입은 모습이 안 그려지기 때문이에요.\n" +
+  "AI가 내 옷장에서 새 조합을 찾아, 마네킹이 입은 모습으로 보여드려요.\n" +
+  "새 옷 사지 않고도, 매일 새 룩.";
+
+type HeroProps = {
+  headline?: ReactNode;
+  subheadline?: string;
+};
+
+export function Hero({
+  headline = DEFAULT_HEADLINE,
+  subheadline = DEFAULT_SUBHEADLINE,
+}: HeroProps = {}) {
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-surface-warm to-background">
       <div className="mx-auto max-w-6xl px-6 pt-20 pb-16 sm:pt-28 sm:pb-20 lg:pt-32">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
           <div className="text-center lg:text-left">
             <h1 className="text-4xl sm:text-5xl lg:text-[3.25rem] font-bold tracking-tight text-balance leading-[1.15]">
-              옷장에 <span className="text-accent">100벌</span> 있는데,
-              <br />
-              매일 똑같은 옷만 입고 있나요?
+              {headline}
             </h1>
-            <p className="mt-6 text-base sm:text-lg text-muted text-pretty max-w-xl mx-auto lg:mx-0">
-              있는 옷도 조합이 어려운 건, 입은 모습이 안 그려지기 때문이에요.
-              <br />
-              AI가 내 옷장에서 새 조합을 찾아, 마네킹이 입은 모습으로 보여드려요.
-              <br />
-              새 옷 사지 않고도, 매일 새 룩.
+            <p className="mt-6 text-base sm:text-lg text-muted text-pretty max-w-xl mx-auto lg:mx-0 whitespace-pre-line">
+              {subheadline}
             </p>
             <div className="mt-8 flex flex-col items-center lg:items-start gap-3">
-              <AppBadges />
+              <HeroStartButton />
               <p className="text-xs text-muted">
                 지금 가입 시 코디 10개 무료 🎁
               </p>
@@ -90,6 +107,13 @@ export function Hero() {
 function MannequinRack() {
   return (
     <div className="mx-auto w-full max-w-[480px]">
+      {/* 차별점 강조 배지 — 데스크탑/모바일 격자 공통 상단 1회 표시 */}
+      <p className="mb-4 text-center">
+        <span className="inline-flex items-center rounded-full bg-accent text-accent-foreground px-4 py-1.5 text-sm font-medium">
+          🧥 새 옷 아니에요, 내 옷장 옷이에요
+        </span>
+      </p>
+
       {/* 데스크탑/태블릿 (md+): 4장 가로 정렬 + 미세 stagger — 옷걸이 줄 느낌 */}
       <ul
         aria-label="내 옷장 코디 4장 미리보기"
@@ -144,11 +168,6 @@ function MannequinRack() {
           </li>
         ))}
       </ul>
-
-      <p className="mt-3 text-center text-xs text-muted">
-        <span className="opacity-70">내 옷장 그대로 ·</span>{" "}
-        <span className="font-medium text-foreground/85">입은 모습</span>
-      </p>
     </div>
   );
 }

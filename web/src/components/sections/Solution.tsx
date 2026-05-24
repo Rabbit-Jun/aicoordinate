@@ -41,7 +41,7 @@ const CODIES: readonly Cody[] = [
 ];
 
 const SOLUTION_BULLETS = [
-  "옷 사진만 올리면 AI가 어울리는 조합을 자동으로 찾아요",
+  "옷 사진만 올리면 AI가 내 옷장에 있는 옷들로 어울리는 조합을 자동으로 찾아요",
   "각 조합을 마네킹이 입은 모습으로 — 핏·실루엣까지 한눈에",
   "여러 코디를 격자로 펼쳐놓고, 마음에 드는 걸 고르기만",
 ];
@@ -55,10 +55,12 @@ export function Solution() {
           <h2 className="mt-4 text-3xl sm:text-4xl lg:text-[2.75rem] font-bold tracking-tight text-balance leading-[1.2]">
             상상하지 마세요.
             <br />
-            <span className="text-accent">입은 모습</span>으로 바로 보여드립니다
+            <span className="text-accent">내 옷장 옷을 입은 모습</span>으로
+            바로 보여드립니다
           </h2>
           <p className="mt-5 text-base sm:text-lg text-muted text-pretty">
-            AI가 내 옷장 옷으로 어울리는 조합을 찾아, 마네킹에 입혀서 보여줘요.
+            AI가 내 옷장에 이미 있는 옷으로 어울리는 조합을 찾아, 마네킹에
+            입혀서 보여줘요.
             <br />
             머릿속으로 그려볼 필요 없이, 여러 코디를 격자로 한 번에 훑어보세요.
           </p>
@@ -76,10 +78,14 @@ export function Solution() {
           </ul>
         </header>
 
+        <p className="mt-12 sm:mt-14 text-center text-sm font-medium text-foreground/85">
+          📦 내 옷장 속 옷들로 만든 코디예요
+        </p>
+
         <ul
           aria-label="마네킹 코디 6장"
           className="
-            mt-12 sm:mt-14
+            mt-4
             flex md:grid md:grid-cols-3
             overflow-x-auto md:overflow-visible
             snap-x snap-mandatory md:snap-none
