@@ -9,9 +9,13 @@ const HEADLINE_A = (
   </>
 );
 
-const SUBHEADLINE_A =
-  "AI가 잊고 있던 옷까지 꺼내, 새로운 조합을 찾아드려요.\n" +
-  "새 옷 사지 않고도 매일 새 룩.";
+const SUBHEADLINE_A = (
+  <>
+    AI가 잊고 있던 옷까지 꺼내, 새로운 조합을 찾아드려요.
+    <br />
+    새 옷 사지 않고도 매일 새 룩.
+  </>
+);
 
 export default function PageA() {
   return (

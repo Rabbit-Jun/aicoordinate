@@ -47,14 +47,19 @@ const DEFAULT_HEADLINE: ReactNode = (
   </>
 );
 
-const DEFAULT_SUBHEADLINE =
-  "있는 옷도 조합이 어려운 건, 입은 모습이 안 그려지기 때문이에요.\n" +
-  "AI가 내 옷장에서 새 조합을 찾아, 마네킹이 입은 모습으로 보여드려요.\n" +
-  "새 옷 사지 않고도, 매일 새 룩.";
+const DEFAULT_SUBHEADLINE: ReactNode = (
+  <>
+    있는 옷도 조합이 어려운 건, 입은 모습이 안 그려지기 때문이에요.
+    <br />
+    AI가 내 옷장에서 새 조합을 찾아, 마네킹이 입은 모습으로 보여드려요.
+    <br />
+    새 옷 사지 않고도, 매일 새 룩.
+  </>
+);
 
 type HeroProps = {
   headline?: ReactNode;
-  subheadline?: string;
+  subheadline?: ReactNode;
 };
 
 export function Hero({
@@ -69,7 +74,7 @@ export function Hero({
             <h1 className="text-4xl sm:text-5xl lg:text-[3.25rem] font-bold tracking-tight text-balance leading-[1.15]">
               {headline}
             </h1>
-            <p className="mt-6 text-base sm:text-lg text-muted text-pretty max-w-xl mx-auto lg:mx-0 whitespace-pre-line">
+            <p className="mt-6 text-base sm:text-lg text-muted text-pretty max-w-xl mx-auto lg:mx-0">
               {subheadline}
             </p>
             <div className="mt-8 flex flex-col items-center lg:items-start gap-3">

@@ -9,9 +9,13 @@ const HEADLINE_B = (
   </>
 );
 
-const SUBHEADLINE_B =
-  "마네킹이 입은 모습으로 보여주니까, 머릿속으로 그릴 필요 없어요.\n" +
-  "새 조합도 한눈에.";
+const SUBHEADLINE_B = (
+  <>
+    마네킹이 입은 모습으로 보여주니까, <br />
+    머릿속으로 그릴 필요 없어요.
+    새 조합도 한눈에.
+  </>
+);
 
 export default function PageB() {
   return (
