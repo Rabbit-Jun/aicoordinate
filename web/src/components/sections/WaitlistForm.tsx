@@ -19,8 +19,7 @@ type Props = {
   theme?: Theme;
   ctaText?: string;
   onSuccess?: () => void;
-  pricingIntent?: "yes" | "maybe" | "no" | null;
-  devicePref?: "ios" | "android" | null;
+  pricingIntent?: "free" | "subscribe" | null;
 };
 
 export function WaitlistForm({
@@ -28,7 +27,6 @@ export function WaitlistForm({
   ctaText = "대기열 등록",
   onSuccess,
   pricingIntent,
-  devicePref,
 }: Props) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<Status>({ kind: "idle" });
@@ -46,7 +44,6 @@ export function WaitlistForm({
       referrer: typeof document !== "undefined" ? document.referrer || null : null,
       userAgent: typeof navigator !== "undefined" ? navigator.userAgent : null,
       pricingIntent: pricingIntent ?? null,
-      devicePref: devicePref ?? null,
     });
 
     switch (result.status) {

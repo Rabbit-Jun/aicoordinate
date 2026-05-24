@@ -42,6 +42,9 @@ body {
     system-ui,
     "Segoe UI",
     sans-serif;
+  /* 한글 어절 중간 줄바꿈 방지 (CJK keep-all) + 긴 영문/URL은 컨테이너 폭 초과 시에만 강제 줄바꿈 */
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 @layer utilities {

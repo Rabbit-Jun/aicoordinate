@@ -4,33 +4,52 @@ import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import { track } from "@/lib/analytics";
 import { WaitlistForm } from "./sections/WaitlistForm";
-
-type Platform = "ios" | "android" | null;
-type PollChoice = "yes" | "maybe" | "no";
+import type { PlanChoice } from "./AppShell";
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  platform: Platform;
+  initialPlan: PlanChoice | null;
 };
 
-const POLL_OPTIONS: ReadonlyArray<{ choice: PollChoice; label: string }> = [
-  { choice: "yes", label: "네, 그 정도면 써볼래요" },
-  { choice: "maybe", label: "무료 기능만 써볼 것 같아요" },
-  { choice: "no", label: "잘 모르겠어요" },
+type Step = "plan" | "email" | "done";
+
+const PLAN_OPTIONS: ReadonlyArray<{
+  value: PlanChoice;
+  title: string;
+  subtitle: string;
+  highlighted: boolean;
+}> = [
+  {
+    value: "free",
+    title: "무료로 시작하기",
+    subtitle: "월 크레딧 1개 · 옷장 100개",
+    highlighted: true,
+  },
+  {
+    value: "subscribe",
+    title: "구독으로 시작하기",
+    subtitle: "월 3,900원 · 옷장 무제한 · 월 크레딧 2개",
+    highlighted: false,
+  },
 ];
 
-export function EmailModal({ isOpen, onClose, platform }: Props) {
-  const [pollChoice, setPollChoice] = useState<PollChoice | null>(null);
-  const [done, setDone] = useState(false);
+export function EmailModal({ isOpen, onClose, initialPlan }: Props) {
+  const [step, setStep] = useState<Step>("plan");
+  const [plan, setPlan] = useState<PlanChoice | null>(initialPlan);
 
-  // 모달이 열릴 때마다 내부 상태 초기화 (이전 응답이 남아 다음 사용자 신호와 섞이지 않도록).
+  // 모달이 열릴 때마다 상태 초기화.
+  // initialPlan이 있으면 플랜 선택 단계 건너뛰고 바로 이메일 단계로.
   useEffect(() => {
-    if (isOpen) {
-      setPollChoice(null);
-      setDone(false);
+    if (!isOpen) return;
+    if (initialPlan) {
+      setPlan(initialPlan);
+      setStep("email");
+    } else {
+      setPlan(null);
+      setStep("plan");
     }
-  }, [isOpen]);
+  }, [isOpen, initialPlan]);
 
   // ESC 키로 닫기
   useEffect(() => {
@@ -54,9 +73,10 @@ export function EmailModal({ isOpen, onClose, platform }: Props) {
 
   if (!isOpen) return null;
 
-  function handleVote(choice: PollChoice) {
-    track({ name: "pricing_poll_voted", props: { choice } });
-    setPollChoice(choice);
+  function handlePlanSelect(p: PlanChoice) {
+    track({ name: "plan_selected", props: { plan: p } });
+    setPlan(p);
+    setStep("email");
   }
 
   function handleBackdrop(e: React.MouseEvent<HTMLDivElement>) {
@@ -69,23 +89,9 @@ export function EmailModal({ isOpen, onClose, platform }: Props) {
       aria-modal="true"
       aria-labelledby="email-modal-title"
       onClick={handleBackdrop}
-      className="
-        fixed inset-0 z-50
-        flex items-end sm:items-center justify-center
-        bg-black/55
-        motion-safe:animate-[fade-in_180ms_ease-out]
-      "
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/55 motion-safe:animate-[fade-in_180ms_ease-out]"
     >
-      <div
-        className="
-          w-full sm:max-w-md
-          bg-white text-foreground
-          rounded-t-2xl sm:rounded-2xl
-          shadow-xl
-          motion-safe:animate-[fade-in_240ms_ease-out]
-        "
-      >
-        {/* 상단 코랄 액센트 바 */}
+      <div className="w-full sm:max-w-md bg-white text-foreground rounded-t-2xl sm:rounded-2xl shadow-xl motion-safe:animate-[fade-in_240ms_ease-out]">
         <div className="h-1.5 bg-accent rounded-t-2xl" aria-hidden />
 
         <div className="p-6 sm:p-7">
@@ -94,32 +100,73 @@ export function EmailModal({ isOpen, onClose, platform }: Props) {
               id="email-modal-title"
               className="text-xl sm:text-2xl font-bold tracking-tight"
             >
-              출시 준비 중이에요
+              {step === "plan"
+                ? "어떻게 시작하실래요?"
+                : "출시 준비 중이에요"}
             </h2>
             <button
               type="button"
               onClick={onClose}
               aria-label="닫기"
-              className="
-                -mt-1 -mr-1 inline-flex h-9 w-9 items-center justify-center
-                rounded-full text-muted
-                transition-colors duration-150
-                hover:bg-background hover:text-foreground
-                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent
-                active:bg-border
-              "
+              className="-mt-1 -mr-1 inline-flex h-9 w-9 items-center justify-center rounded-full text-muted transition-colors duration-150 hover:bg-background hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent active:bg-border"
             >
               <X size={18} aria-hidden />
             </button>
           </div>
 
-          {done ? (
-            <DoneBlock onClose={onClose} />
-          ) : (
-            <>
+          {step === "plan" && (
+            <div
+              key="plan"
+              className="motion-safe:animate-[fade-in_200ms_ease-out]"
+            >
               <p className="mt-3 text-sm leading-relaxed text-muted">
-                곧 출시 예정이에요! 지금 이메일을 남겨두시면 출시할 때 가장 먼저
-                알려드리고{" "}
+                두 플랜 다 부담 없이 시작할 수 있어요. 어떤 플랜으로 출시
+                안내를 받으실래요?
+              </p>
+              <div className="mt-5 flex flex-col gap-2.5">
+                {PLAN_OPTIONS.map((opt) => (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    data-track="plan_selected"
+                    onClick={() => handlePlanSelect(opt.value)}
+                    className={`
+                      w-full rounded-2xl px-5 py-3.5 text-left
+                      transition-transform duration-150 will-change-transform
+                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-white
+                      hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]
+                      ${
+                        opt.highlighted
+                          ? "bg-accent text-accent-foreground"
+                          : "border border-border bg-background text-foreground hover:border-accent hover:text-accent"
+                      }
+                    `}
+                  >
+                    <span className="block text-base font-semibold">
+                      {opt.title}
+                    </span>
+                    <span
+                      className={
+                        "mt-0.5 block text-xs " +
+                        (opt.highlighted ? "opacity-90" : "text-muted")
+                      }
+                    >
+                      {opt.subtitle}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {step === "email" && (
+            <div
+              key="email"
+              className="motion-safe:animate-[fade-in_200ms_ease-out]"
+            >
+              <p className="mt-3 text-sm leading-relaxed text-muted">
+                곧 출시 예정이에요! 지금 이메일을 남겨두시면 출시할 때 가장
+                먼저 알려드리고{" "}
                 <span className="font-semibold text-accent">
                   코디 10개를 선물
                 </span>
@@ -127,47 +174,11 @@ export function EmailModal({ isOpen, onClose, platform }: Props) {
               </p>
 
               <div className="mt-5">
-                <p className="text-sm font-semibold">
-                  출시되면 크레딧 1개(코디 5개) 500원에 써보실 의향이 있나요?
-                </p>
-                <div className="mt-3 flex flex-col gap-2">
-                  {POLL_OPTIONS.map((opt) => {
-                    const active = pollChoice === opt.choice;
-                    return (
-                      <button
-                        key={opt.choice}
-                        type="button"
-                        data-track="pricing_poll_voted"
-                        onClick={() => handleVote(opt.choice)}
-                        aria-pressed={active}
-                        className={`
-                          w-full rounded-full px-5 py-2.5
-                          text-sm font-medium text-left
-                          border
-                          transition-transform duration-150 will-change-transform
-                          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-white
-                          active:translate-y-0 active:scale-[0.98]
-                          ${
-                            active
-                              ? "border-accent bg-accent/10 text-accent"
-                              : "border-border bg-background text-foreground hover:-translate-y-0.5 hover:border-accent hover:text-accent"
-                          }
-                        `}
-                      >
-                        {opt.label}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div className="mt-5">
                 <WaitlistForm
                   theme="light"
-                  ctaText="선물 받고 등록하기"
-                  pricingIntent={pollChoice}
-                  devicePref={platform}
-                  onSuccess={() => setDone(true)}
+                  ctaText="등록하고 선물 받기"
+                  pricingIntent={plan}
+                  onSuccess={() => setStep("done")}
                 />
               </div>
 
@@ -175,8 +186,10 @@ export function EmailModal({ isOpen, onClose, platform }: Props) {
                 ⚠️ 앱은 곧 출시 예정이에요. 등록하시면 출시할 때 안내 메일을
                 1번 보내드려요.
               </p>
-            </>
+            </div>
           )}
+
+          {step === "done" && <DoneBlock onClose={onClose} />}
         </div>
       </div>
     </div>
@@ -196,15 +209,7 @@ function DoneBlock({ onClose }: { onClose: () => void }) {
       <button
         type="button"
         onClick={onClose}
-        className="
-          mt-5 inline-flex items-center justify-center
-          rounded-full bg-foreground text-background
-          px-5 py-2.5 text-sm font-semibold
-          transition-opacity duration-150
-          hover:opacity-90
-          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2
-          active:opacity-80
-        "
+        className="mt-5 inline-flex items-center justify-center rounded-full bg-foreground text-background px-5 py-2.5 text-sm font-semibold transition-opacity duration-150 hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 active:opacity-80"
       >
         닫기
       </button>

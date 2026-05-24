@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { AnalyticsProvider } from "@/components/AnalyticsProvider";
 import "./globals.css";
 
 const siteTitle = "내 옷장으로 만드는 AI 코디";
@@ -39,7 +38,6 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className="font-sans antialiased bg-background text-foreground overflow-x-hidden">
-        <AnalyticsProvider />
         {children}
       </body>
     </html>

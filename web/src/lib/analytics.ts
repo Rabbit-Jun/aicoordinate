@@ -1,14 +1,15 @@
 import * as amplitude from "@amplitude/unified";
 import { getPublicEnv } from "./env";
 
+export type LandingVariant = "default" | "a" | "b";
+
 export type AnalyticsEvent =
-  | { name: "landing_viewed"; props?: Record<string, unknown> }
+  | { name: "landing_viewed"; props?: { variant?: LandingVariant } }
   | { name: "hero_cta_clicked"; props?: Record<string, unknown> }
   | { name: "waitlist_submit_attempt"; props?: Record<string, unknown> }
   | { name: "waitlist_submitted"; props?: Record<string, unknown> }
   | { name: "waitlist_failed"; props: { reason: string } }
-  | { name: "pricing_poll_voted"; props: { choice: "yes" | "maybe" | "no" } }
-  | { name: "app_badge_clicked"; props: { platform: "ios" | "android" } };
+  | { name: "plan_selected"; props: { plan: "free" | "subscribe" } };
 
 let initialized = false;
 

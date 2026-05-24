@@ -9,10 +9,10 @@ import {
 } from "react";
 import { EmailModal } from "./EmailModal";
 
-type Platform = "ios" | "android" | null;
+export type PlanChoice = "free" | "subscribe";
 
 type ModalCtx = {
-  openModal: (platform: Platform) => void;
+  openModal: (plan?: PlanChoice) => void;
 };
 
 const Ctx = createContext<ModalCtx | null>(null);
@@ -27,10 +27,10 @@ export function useEmailModal(): ModalCtx {
 
 export function AppShell({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [platform, setPlatform] = useState<Platform>(null);
+  const [initialPlan, setInitialPlan] = useState<PlanChoice | null>(null);
 
-  const openModal = useCallback((p: Platform) => {
-    setPlatform(p);
+  const openModal = useCallback((p?: PlanChoice) => {
+    setInitialPlan(p ?? null);
     setIsOpen(true);
   }, []);
 
@@ -44,7 +44,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <EmailModal
         isOpen={isOpen}
         onClose={closeModal}
-        platform={platform}
+        initialPlan={initialPlan}
       />
     </Ctx.Provider>
   );
