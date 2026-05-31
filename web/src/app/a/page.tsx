@@ -4,8 +4,7 @@ import { LandingBody } from "@/components/sections/LandingBody";
 
 const HEADLINE_A = (
   <>
-    내 옷장에 <span className="text-accent">100벌</span>, 그런데 안 입는 옷이
-    절반이죠?
+    내 옷장에 <span className="text-accent">100벌</span>, 그런데 어떤 옷이 있었더라?
   </>
 );
 
