@@ -14,6 +14,9 @@ const config: Config = {
         muted: "var(--muted)",
         surface: "var(--surface)",
         "surface-warm": "var(--surface-warm)",
+        "surface-yellow": "var(--surface-yellow)",
+        "surface-blue": "var(--surface-blue)",
+        "surface-green": "var(--surface-green)",
         border: "var(--border)",
         accent: {
           DEFAULT: "var(--accent)",

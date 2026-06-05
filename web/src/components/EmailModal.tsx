@@ -2,64 +2,48 @@
 
 import { useEffect, useState } from "react";
 import { X } from "lucide-react";
-import { track } from "@/lib/analytics";
 import { WaitlistForm } from "./sections/WaitlistForm";
-import type { PlanChoice } from "./AppShell";
+import { track, type ModalEntry } from "@/lib/analytics";
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  initialPlan: PlanChoice | null;
+  // 어디서 모달을 열었는지(분석용 동행 정보, 단계 2의 modal_step_viewed에서 사용 예정).
+  entry: ModalEntry;
 };
 
-type Step = "plan" | "email" | "done";
+type Step = "email" | "done";
 
-const PLAN_OPTIONS: ReadonlyArray<{
-  value: PlanChoice;
-  title: string;
-  subtitle: string;
-  highlighted: boolean;
-}> = [
-  {
-    value: "free",
-    title: "무료로 시작하기",
-    subtitle: "월 크레딧 1개 · 옷장 100개",
-    highlighted: true,
-  },
-  {
-    value: "subscribe",
-    title: "구독으로 시작하기",
-    subtitle: "월 3,900원 · 옷장 무제한 · 월 크레딧 2개",
-    highlighted: false,
-  },
-];
+export function EmailModal({ isOpen, onClose, entry }: Props) {
+  const [step, setStep] = useState<Step>("email");
 
-export function EmailModal({ isOpen, onClose, initialPlan }: Props) {
-  const [step, setStep] = useState<Step>("plan");
-  const [plan, setPlan] = useState<PlanChoice | null>(initialPlan);
+  // 모달이 열릴 때마다 step 초기화.
+  useEffect(() => {
+    if (isOpen) setStep("email");
+  }, [isOpen]);
 
-  // 모달이 열릴 때마다 상태 초기화.
-  // initialPlan이 있으면 플랜 선택 단계 건너뛰고 바로 이메일 단계로.
+  // 단계 진입 추적: 모달이 열린 상태에서 step이 바뀔 때마다 modal_step_viewed 발사.
   useEffect(() => {
     if (!isOpen) return;
-    if (initialPlan) {
-      setPlan(initialPlan);
-      setStep("email");
-    } else {
-      setPlan(null);
-      setStep("plan");
-    }
-  }, [isOpen, initialPlan]);
+    track({ name: "modal_step_viewed", props: { step, entry } });
+  }, [isOpen, step, entry]);
+
+  // 닫기 통합 함수 — X 버튼 / 백드롭 / ESC 3경로 모두 이 함수 호출 → modal_closed 1곳 발사.
+  function trackClose() {
+    track({ name: "modal_closed", props: { step, entry } });
+    onClose();
+  }
 
   // ESC 키로 닫기
   useEffect(() => {
     if (!isOpen) return;
     function handleKey(e: KeyboardEvent) {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") trackClose();
     }
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
-  }, [isOpen, onClose]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- trackClose는 step/entry 변화에 자동 재바인딩
+  }, [isOpen, step, entry]);
 
   // 모달 열린 동안 body scroll lock
   useEffect(() => {
@@ -73,14 +57,8 @@ export function EmailModal({ isOpen, onClose, initialPlan }: Props) {
 
   if (!isOpen) return null;
 
-  function handlePlanSelect(p: PlanChoice) {
-    track({ name: "plan_selected", props: { plan: p } });
-    setPlan(p);
-    setStep("email");
-  }
-
   function handleBackdrop(e: React.MouseEvent<HTMLDivElement>) {
-    if (e.target === e.currentTarget) onClose();
+    if (e.target === e.currentTarget) trackClose();
   }
 
   return (
@@ -100,13 +78,11 @@ export function EmailModal({ isOpen, onClose, initialPlan }: Props) {
               id="email-modal-title"
               className="text-xl sm:text-2xl font-bold tracking-tight"
             >
-              {step === "plan"
-                ? "어떻게 시작하실래요?"
-                : "출시 준비 중이에요"}
+              출시 준비 중이에요
             </h2>
             <button
               type="button"
-              onClick={onClose}
+              onClick={trackClose}
               aria-label="닫기"
               className="-mt-1 -mr-1 inline-flex h-9 w-9 items-center justify-center rounded-full text-muted transition-colors duration-150 hover:bg-background hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent active:bg-border"
             >
@@ -114,82 +90,34 @@ export function EmailModal({ isOpen, onClose, initialPlan }: Props) {
             </button>
           </div>
 
-          {step === "plan" && (
-            <div
-              key="plan"
-              className="motion-safe:animate-[fade-in_200ms_ease-out]"
-            >
-              <p className="mt-3 text-sm leading-relaxed text-muted">
-                두 플랜 다 부담 없이 시작할 수 있어요. 어떤 플랜으로 출시
-                안내를 받으실래요?
-              </p>
-              <div className="mt-5 flex flex-col gap-2.5">
-                {PLAN_OPTIONS.map((opt) => (
-                  <button
-                    key={opt.value}
-                    type="button"
-                    data-track="plan_selected"
-                    onClick={() => handlePlanSelect(opt.value)}
-                    className={`
-                      w-full rounded-2xl px-5 py-3.5 text-left
-                      transition-transform duration-150 will-change-transform
-                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-white
-                      hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]
-                      ${
-                        opt.highlighted
-                          ? "bg-accent text-accent-foreground"
-                          : "border border-border bg-background text-foreground hover:border-accent hover:text-accent"
-                      }
-                    `}
-                  >
-                    <span className="block text-base font-semibold">
-                      {opt.title}
-                    </span>
-                    <span
-                      className={
-                        "mt-0.5 block text-xs " +
-                        (opt.highlighted ? "opacity-90" : "text-muted")
-                      }
-                    >
-                      {opt.subtitle}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
           {step === "email" && (
             <div
               key="email"
               className="motion-safe:animate-[fade-in_200ms_ease-out]"
             >
               <p className="mt-3 text-sm leading-relaxed text-muted">
-                곧 출시 예정이에요! 지금 이메일을 남겨두시면 출시할 때 가장
-                먼저 알려드리고{" "}
+                출시되면 가장 먼저 알려드려요. 얼리버드 선물:{" "}
                 <span className="font-semibold text-accent">
-                  코디 10개를 선물
+                  코디 30개 무료 🎁
                 </span>
-                로 드려요.
               </p>
 
               <div className="mt-5">
                 <WaitlistForm
                   theme="light"
-                  ctaText="등록하고 선물 받기"
-                  pricingIntent={plan}
+                  ctaText="선물 받고 기다리기"
+                  pricingIntent="free"
                   onSuccess={() => setStep("done")}
                 />
               </div>
 
-              <p className="mt-4 text-[11px] leading-relaxed text-muted">
-                ⚠️ 앱은 곧 출시 예정이에요. 등록하시면 출시할 때 안내 메일을
-                1번 보내드려요.
+              <p className="mt-3 text-xs leading-relaxed text-muted">
+                스팸 없어요. 출시 알림 1번만 보내드려요.
               </p>
             </div>
           )}
 
-          {step === "done" && <DoneBlock onClose={onClose} />}
+          {step === "done" && <DoneBlock onClose={trackClose} />}
         </div>
       </div>
     </div>

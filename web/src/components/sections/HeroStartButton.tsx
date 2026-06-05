@@ -8,7 +8,8 @@ export function HeroStartButton() {
 
   function handleClick() {
     track({ name: "hero_cta_clicked", props: { target: "free_start_modal" } });
-    openModal();
+    track({ name: "plan_selected", props: { plan: "free", entry: "hero" } });
+    openModal("hero");
   }
 
   return (

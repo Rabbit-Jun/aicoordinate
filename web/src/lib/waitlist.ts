@@ -5,9 +5,10 @@ export type WaitlistJoinInput = {
   source?: string | null;
   referrer?: string | null;
   userAgent?: string | null;
-  // pricing_intent 컬럼은 재활용: yes/maybe/no → free/subscribe.
+  // 구독 흐름 폐기(2026-06-01). 호출처에서 항상 "free" 전달.
+  // pricing_intent 컬럼은 의미 재활용 이력: yes/maybe/no → free/subscribe → free.
   // device_pref 컬럼은 방치(앱배지 신호 폐기).
-  pricingIntent?: "free" | "subscribe" | null;
+  pricingIntent?: "free" | null;
 };
 
 export type WaitlistJoinResult =

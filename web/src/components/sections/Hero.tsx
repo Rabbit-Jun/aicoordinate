@@ -80,7 +80,7 @@ export function Hero({
             <div className="mt-8 flex flex-col items-center lg:items-start gap-3">
               <HeroStartButton />
               <p className="text-xs text-muted">
-                지금 가입 시 코디 10개 무료 🎁
+                지금 가입 시 코디 30개 무료 🎁
               </p>
             </div>
             <dl className="mt-10 grid grid-cols-3 gap-4 max-w-md mx-auto lg:mx-0">
