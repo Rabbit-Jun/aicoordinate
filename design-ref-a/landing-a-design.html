@@ -1,0 +1,1861 @@
+<!DOCTYPE html><html lang="ko"><head>
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>옷장 코디 랜딩</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  :root {
+    --coral: #E73349;
+    --ink: #1A1410;
+    --gray: #7A6E66;
+    --bg-soft: #FFF6F1;
+    --card-cream: #FFFEF0;
+    --white: #FFFFFF;
+    --pad: 24px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    background: #e9e5e1;
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Mobile page frame — 390px design width */
+  .page {
+    width: 390px;
+    max-width: 100%;
+    margin: 0 auto;
+    background: var(--bg-soft);
+    overflow: hidden;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+
+  .coral { color: var(--coral); }
+
+  /* ---------- shared section ---------- */
+  section { padding: 64px var(--pad); }
+
+  .eyebrow-center { text-align: center; }
+
+  h1, h2 { letter-spacing: -0.02em; line-height: 1.32; }
+
+  /* ============ HERO ============ */
+  .hero {
+    background: linear-gradient(180deg, #FFFFFF 0%, #FFFFFF 55%, #EAF7F1 100%);
+    padding: 60px var(--pad) 40px;
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1.28;
+    text-align: center;
+    letter-spacing: -0.025em;
+  }
+  .hero-sub {
+    margin-top: 22px;
+    color: var(--gray);
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.68;
+  }
+  .cta {
+    display: inline-block;
+    margin-top: 24px;
+    background: var(--coral);
+    color: #fff;
+    font-size: 17px;
+    font-weight: 700;
+    padding: 18px 46px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(231,51,73,0.28);
+  }
+  .cta-note {
+    margin-top: 18px;
+    color: var(--gray);
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 48px;
+  }
+  .stat-num { font-size: 27px; font-weight: 800; color: var(--ink); }
+  .stat-cap { margin-top: 8px; font-size: 13px; font-weight: 500; color: var(--gray); }
+
+  /* hero pill badge */
+  .pill-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--coral);
+    color: #fff;
+    font-size: 14.5px;
+    font-weight: 700;
+    padding: 11px 20px;
+    border-radius: 999px;
+  }
+  .hero-gallery-wrap { text-align: center; padding-top: 4px; }
+  .pill-btn {
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    box-shadow: 0 8px 20px rgba(231,51,73,0.28);
+    transition: transform .12s ease, box-shadow .12s ease;
+  }
+  .pill-btn:hover { box-shadow: 0 10px 24px rgba(231,51,73,0.34); }
+  .pill-btn:active { transform: translateY(1px); box-shadow: 0 5px 14px rgba(231,51,73,0.28); }
+  .pill-btn-purple { box-shadow: 0 8px 20px rgba(124,92,196,0.30); }
+  .pill-btn-purple:hover { box-shadow: 0 10px 24px rgba(124,92,196,0.38); }
+  .pill-btn-purple:active { box-shadow: 0 5px 14px rgba(124,92,196,0.30); }
+  .gallery-caption {
+    margin: 14px auto 0;
+    max-width: 280px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .hgall {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    margin-top: 22px;
+    padding: 0 var(--pad);
+  }
+  .hgall::-webkit-scrollbar { display: none; }
+  .hgall .shot {
+    flex: 0 0 72%;
+    scroll-snap-align: center;
+  }
+
+  /* hero phone frame */
+  .hero-phone {
+    position: relative;
+    width: 250px;
+    flex: 0 0 auto;
+    background: #1A1410;
+    border-radius: 40px;
+    padding: 9px;
+    box-shadow: 0 16px 36px rgba(26,20,16,0.22);
+    scroll-snap-align: center;
+  }
+  .hp-notch {
+    position: absolute;
+    top: 9px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 96px;
+    height: 22px;
+    background: #1A1410;
+    border-radius: 0 0 14px 14px;
+    z-index: 3;
+  }
+  .hp-screen {
+    position: relative;
+    width: 232px;
+    height: 438px;
+    border-radius: 32px;
+    overflow: hidden;
+    background: #fff;
+  }
+  /* closet UI scaled into the phone (natural width 360px) */
+  .cl-ui {
+    position: absolute;
+    top: 0; left: 0;
+    width: 360px;
+    height: 680px;
+    transform: scale(0.6444);
+    transform-origin: top left;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    font-family: "Pretendard", sans-serif;
+    color: #111;
+    text-align: left;
+    word-break: keep-all;
+  }
+  .cl-status {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 18px 6px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .cl-status .right { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: #222; }
+  .cl-status .batt {
+    background: #E5484D; color: #fff; font-size: 11px; font-weight: 700;
+    padding: 1px 6px; border-radius: 7px;
+  }
+  .cl-header {
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    height: 52px;
+  }
+  .cl-header .title { font-size: 20px; font-weight: 700; }
+  .cl-header .back {
+    position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+    color: #111;
+  }
+  .cl-filters { display: flex; gap: 10px; padding: 6px 16px 14px; }
+  .cl-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    border: 1px solid #E6E6E6; border-radius: 14px;
+    padding: 9px 15px; font-size: 14.5px; font-weight: 600; color: #222;
+    background: #fff; white-space: nowrap;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  }
+  .cl-pill.icon { padding: 9px 11px; }
+  .cl-pill .chev { color: #222; }
+  .cl-tabs {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    padding: 0 16px; border-bottom: 1px solid #EEE;
+  }
+  .cl-tab {
+    position: relative; padding: 6px 2px 14px; font-size: 17px; font-weight: 700; color: #BDBDBD;
+  }
+  .cl-tab .dot { position: absolute; top: 4px; right: -7px; width: 4px; height: 4px; border-radius: 50%; background: #C9C9C9; }
+  .cl-tab.on { color: #111; }
+  .cl-tab.on::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2.5px; background: #111; border-radius: 2px;
+  }
+  .cl-subfilter { display: flex; align-items: center; gap: 12px; padding: 16px 16px 14px; }
+  .cl-subfilter .s { font-size: 16px; font-weight: 700; color: #C4C4C4; }
+  .cl-subfilter .s.on { color: #111; }
+  .cl-subfilter .bar { width: 1px; height: 13px; background: #E2E2E2; }
+  .cl-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+    border-top: 1px solid #F0F0F0;
+  }
+  .cl-item {
+    position: relative; padding: 14px 12px 16px;
+    border-right: 1px solid #F0F0F0; border-bottom: 1px solid #F0F0F0;
+  }
+  .cl-check {
+    position: absolute; top: 18px; left: 16px;
+    width: 22px; height: 22px; border-radius: 50%;
+    border: 1.5px solid #D5D5D5; background: #fff; z-index: 2;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .cl-check.on { background: #111; border-color: #111; color: #fff; }
+  .cl-thumb {
+    aspect-ratio: 1/1.15; border-radius: 8px;
+    background:
+      repeating-linear-gradient(135deg, #f1f1f1 0 9px, #f8f8f8 9px 18px);
+  }
+  .cl-date { margin-top: 12px; font-size: 13px; font-weight: 500; color: #9A9A9A; }
+  .cl-bottom { margin-top: auto; position: relative; padding: 0 16px 20px; }
+  .cl-fab {
+    position: absolute; right: 18px; top: -64px;
+    width: 56px; height: 56px; border-radius: 50%;
+    background: #fff; box-shadow: 0 6px 18px rgba(0,0,0,0.16);
+    display: flex; align-items: center; justify-content: center; color: #333;
+  }
+  .cl-cta {
+    height: 58px; border-radius: 12px; background: #111; color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 700;
+  }
+
+  /* ---------- AI coordi screen (phone 2) ---------- */
+  .co-ui {
+    position: absolute;
+    top: 0; left: 0;
+    width: 360px;
+    height: 680px;
+    transform: scale(0.6444);
+    transform-origin: top left;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    font-family: "Pretendard", sans-serif;
+    color: #111;
+    text-align: left;
+    word-break: keep-all;
+  }
+  .co-header {
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    height: 50px;
+  }
+  .co-header .title { font-size: 20px; font-weight: 700; }
+  .co-header .back {
+    position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+    color: #111;
+  }
+  .co-sub {
+    padding: 2px 18px 12px;
+    font-size: 14px; font-weight: 500; color: #8A8A8A; line-height: 1.45;
+  }
+  .co-sub b { color: var(--coral); font-weight: 800; }
+  .co-scroll {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+    border-top: 1px solid #F0F0F0;
+  }
+  .co-track {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 14px 16px 24px;
+    will-change: transform;
+  }
+  .co-card {
+    position: relative;
+    border: 2px solid transparent;
+    border-radius: 14px;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    background: #F4F2EF;
+    cursor: pointer;
+    font-family: inherit;
+    transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+  }
+  .co-img { aspect-ratio: 158 / 196; background: #F4F2EF; }
+  .co-img img { width: 100%; height: 100%; object-fit: cover; object-position: center 12%; display: block; }
+  .co-name {
+    display: block;
+    padding: 9px 11px 11px;
+    font-size: 13px; font-weight: 600; color: #333; background: #fff;
+    text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .co-check {
+    position: absolute; top: 9px; right: 9px;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: rgba(255,255,255,0.86);
+    border: 1.5px solid #D5D5D5;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+    transition: background .16s ease, border-color .16s ease, transform .16s ease;
+  }
+  .co-check svg { opacity: 0; transition: opacity .16s ease; }
+  .co-card.sel { border-color: var(--coral); box-shadow: 0 8px 20px rgba(231,51,73,0.20); }
+  .co-card.sel .co-check { background: var(--coral); border-color: var(--coral); transform: scale(1.08); }
+  .co-card.sel .co-check svg { opacity: 1; }
+  .co-card.sel .co-name { color: var(--coral); font-weight: 700; }
+  .co-fade {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 40px;
+    background: linear-gradient(180deg, rgba(255,255,255,0) 0%, #fff 100%);
+    pointer-events: none;
+  }
+  /* bottom select sheet — slides up when a coordi is picked */
+  .co-bar {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 16px 18px;
+    background: #fff;
+    border-top: 1px solid #EEE;
+    box-shadow: 0 -8px 22px rgba(0,0,0,0.07);
+    transform: translateY(118%);
+    transition: transform .34s cubic-bezier(.22,.9,.3,1);
+  }
+  .co-bar.shown { transform: translateY(0); }
+  .co-bar .picked {
+    flex: 1; min-width: 0;
+    display: flex; flex-direction: column; gap: 3px;
+  }
+  .co-bar .picked .k { font-size: 12px; font-weight: 600; color: #9A9A9A; }
+  .co-bar .picked .v { font-size: 16px; font-weight: 700; color: #111; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .co-select {
+    flex: 0 0 auto;
+    height: 50px; padding: 0 30px; border: none; border-radius: 12px;
+    background: var(--coral); color: #fff; font-size: 17px; font-weight: 700;
+    font-family: inherit; cursor: pointer;
+    box-shadow: 0 8px 18px rgba(231,51,73,0.30);
+  }
+  .co-select:active { transform: translateY(1px); }
+  .co-select.press { transform: translateY(1px) scale(0.97); }
+
+  /* enlarge / detail overlay shown after 선택 — keeps status bar + 나의 코디1 header visible */
+  .co-zoom {
+    position: absolute; left: 0; right: 0; bottom: 0; top: 85px; z-index: 6;
+    background: #fff;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .42s ease;
+  }
+  .co-zoom.show { opacity: 1; }
+  .co-zoom .dt-hero { height: 100%; }
+
+  /* ---------- 나의 코디3: category tab cycling 전체→캐쥬얼→포멀→클래식→빈티지 ---------- */
+  .cat-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    padding: 16px 16px 24px;
+    transition: opacity .38s ease;
+  }
+  .cat-grid.fading { opacity: 0; }
+  .cat-card {
+    border-radius: 14px; overflow: hidden; background: #F4F2EF;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  .cat-img { aspect-ratio: 158 / 196; background: #F4F2EF; }
+  .cat-img img { width: 100%; height: 100%; object-fit: cover; object-position: center 12%; display: block; }
+  .cat-name {
+    display: block; padding: 9px 11px 11px;
+    font-size: 13px; font-weight: 600; color: #333; background: #fff;
+    text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .cl-tab { transition: color .3s ease; }
+  .cl-tab.on::after { transition: opacity .3s ease; }
+
+  /* ---------- 나의 옷장: clothing items scroll → select → enlarge ---------- */
+  .closet-phone .co-img { background: #fff; }
+  .closet-phone .co-img img { object-fit: contain; object-position: center; }
+  .cl-add {
+    flex: 0 0 auto;
+    margin-left: auto;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--coral); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 12px rgba(231,51,73,0.30);
+  }
+  .cl-add.pulse { animation: addPulse .55s ease; }
+  @keyframes addPulse {
+    0% { transform: scale(1); box-shadow: 0 4px 12px rgba(231,51,73,0.30); }
+    45% { transform: scale(1.22); box-shadow: 0 0 0 8px rgba(231,51,73,0.16); }
+    100% { transform: scale(1); box-shadow: 0 4px 12px rgba(231,51,73,0.30); }
+  }
+
+  /* ---------- 나의 옷장3: + → 옷 추가 screen ---------- */
+  .add-screen {
+    position: absolute; left: 0; right: 0; top: 42px; bottom: 0; z-index: 7;
+    background: #fff;
+    padding: 14px 18px 20px;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    transform: translateY(102%);
+    transition: transform .44s cubic-bezier(.22,.9,.3,1);
+    text-align: left;
+  }
+  .add-screen.show { transform: translateY(0); }
+  .as-top { display: flex; align-items: center; gap: 12px; }
+  .as-top .as-back { color: #111; flex: 0 0 auto; }
+  .as-toptitle { flex: 1; font-size: 19px; font-weight: 700; color: #111; }
+  .as-search {
+    flex: 1; display: flex; align-items: center; gap: 9px;
+    background: #EFEFF1; border-radius: 999px; padding: 11px 15px;
+    color: #9A9A9A; font-size: 15px; font-weight: 500;
+  }
+  .as-search .mag { flex: 0 0 auto; }
+  .as-search .ph { flex: 1; }
+  .as-top .as-help { color: #444; flex: 0 0 auto; }
+  .as-h { margin: 22px 0 14px; font-size: 22px; font-weight: 800; color: #111; }
+  .as-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .as-card.span2 { grid-column: 1 / -1; }
+  .as-grid-fill {
+    flex: 1; min-height: 0;
+    grid-template-rows: 1fr 1fr;
+    padding-bottom: 4px;
+  }
+  .as-grid-fill .as-card { height: auto; }
+  .as-card {
+    height: 96px; border-radius: 14px; border: 1px solid #E6E6E6;
+    display: flex; flex-direction: column; justify-content: center; gap: 12px;
+    padding: 0 20px; color: #111;
+  }
+  .as-card .lbl { font-size: 18px; font-weight: 700; }
+  .as-card.dark { background: #1A1A1A; border-color: #1A1A1A; color: #fff; }
+  .as-more { text-align: center; margin: 22px 0 4px; font-size: 16px; font-weight: 600; color: #9A9A9A; }
+  .as-h2 { margin: 28px 0 16px; font-size: 22px; font-weight: 800; color: #111; }
+  .as-row {
+    display: flex; align-items: center; gap: 14px;
+    border: 1px solid #E6E6E6; border-radius: 14px;
+    padding: 16px 18px; margin-bottom: 12px;
+  }
+  .as-row .as-label { font-size: 17px; font-weight: 600; color: #111; }
+  .as-stack { display: flex; flex: 0 0 auto; }
+  .as-stack i { width: 30px; height: 30px; border-radius: 50%; border: 2px solid #fff; margin-left: -8px; }
+  .as-stack i:first-child { margin-left: 0; }
+  .as-stack i.a { background: #111; } .as-stack i.b { background: #DADADA; } .as-stack i.c { background: #E84FA6; }
+  .as-mail {
+    flex: 0 0 auto; width: 36px; height: 36px; border-radius: 50%;
+    background: #E8F0FE; display: flex; align-items: center; justify-content: center; color: #3B7DED;
+  }
+  .cz-zoom {
+    position: absolute; left: 0; right: 0; bottom: 0; top: 85px; z-index: 6;
+    background: #fff;
+    display: flex; flex-direction: column;
+    opacity: 0; pointer-events: none;
+    transition: opacity .4s ease;
+  }
+  .cz-zoom.show { opacity: 1; }
+  .cz-imgwrap { flex: 1; overflow: hidden; background: #fff; }
+  .cz-imgwrap img { width: 100%; height: 100%; object-fit: contain; object-position: center; }
+  .cz-cap {
+    padding: 18px 18px 24px; background: #fff;
+    display: flex; flex-direction: column; gap: 5px;
+    border-top: 1px solid #F0F0F0;
+  }
+  .cz-cap .czk { font-size: 13px; font-weight: 700; color: var(--coral); }
+  .cz-cap .czv { font-size: 22px; font-weight: 800; color: #111; }
+
+  /* ---------- 나의 코디2: enlarged mannequin → scroll reveals worn items ---------- */
+  .dt-scroll {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+    background: #fff;
+    border-top: 1px solid #F0F0F0;
+  }
+  .dt-track { will-change: transform; }
+  .dt-hero {
+    position: relative;
+    height: 560px;
+    background: #fff;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .dt-hero img { width: 100%; height: 100%; object-fit: contain; object-position: center; }
+  .dt-hero .dt-tag {
+    position: absolute; left: 16px; top: 16px;
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--coral); color: #fff;
+    font-size: 13px; font-weight: 700;
+    padding: 7px 13px; border-radius: 999px;
+  }
+  .dt-hint {
+    position: absolute; left: 0; right: 0; bottom: 14px;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    color: #9A9A9A; font-size: 13px; font-weight: 600;
+    animation: dtBob 1.4s ease-in-out infinite;
+  }
+  @keyframes dtBob { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(5px); } }
+  .dt-sheet {
+    background: #fff;
+    border-radius: 22px 22px 0 0;
+    margin-top: -22px;
+    position: relative;
+    box-shadow: 0 -10px 26px rgba(0,0,0,0.06);
+    padding: 22px 18px 30px;
+  }
+  .dt-grab { width: 42px; height: 5px; border-radius: 999px; background: #E2E2E2; margin: 0 auto 18px; }
+  .dt-sheet .dt-name { font-size: 22px; font-weight: 800; color: #111; }
+  .dt-sheet .dt-desc { margin-top: 7px; font-size: 14px; font-weight: 500; color: #8A8A8A; line-height: 1.5; }
+  .dt-sectlabel {
+    display: flex; align-items: center; gap: 8px;
+    margin: 22px 0 14px; font-size: 16px; font-weight: 700; color: #111;
+  }
+  .dt-sectlabel .cnt { color: var(--coral); }
+  .dt-items { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .dt-item {
+    border: 1px solid #EFEFEF; border-radius: 14px; overflow: hidden; background: #fff;
+  }
+  .dt-item .dt-thumb { aspect-ratio: 1/1; background: #F7F6F4; }
+  .dt-item .dt-thumb img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .dt-item .dt-meta { padding: 11px 13px 13px; }
+  .dt-item .dt-cat { font-size: 12px; font-weight: 700; color: var(--coral); }
+  .dt-item .dt-label { margin-top: 3px; font-size: 14px; font-weight: 600; color: #333; }
+
+  /* ---------- outfit image placeholder ---------- */
+  .shot {
+    border-radius: 18px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 6px 18px rgba(26,20,16,0.06);
+  }
+  .ph {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    background:
+      repeating-linear-gradient(135deg, #f4f1ee 0 10px, #fbf9f7 10px 20px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ph span {
+    font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    color: #b4aaa2;
+    text-align: center;
+    line-height: 1.5;
+    padding: 0 10px;
+  }
+
+  /* ============ PAIN ============ */
+  .pain { background: #EAF7F1; }
+  .pain h2 {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 800;
+  }
+  .pain-cards { display: flex; flex-direction: column; gap: 16px; margin-top: 40px; }
+  .pain-card {
+    border-radius: 18px;
+    padding: 24px 24px 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .pain-card.c-pink   { background: #FBE7EB; }
+  .pain-card.c-yellow { background: #FBF3DA; }
+  .pain-card.c-blue   { background: #E7F0FB; }
+  .pain-card.c-green  { background: #E2F3EA; }
+  .pain-card .lead {
+    margin: 0;
+    list-style: none;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.42;
+    letter-spacing: -0.01em;
+  }
+  .pain-card .body {
+    margin: 0;
+    font-size: 14.5px;
+    font-weight: 500;
+    color: var(--gray);
+    line-height: 1.62;
+  }
+
+  /* ============ SOLUTION ============ */
+  .solution { background: var(--white); }
+  .solution h2 {
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1.34;
+    text-align: center;
+  }
+  .solution-sub {
+    margin-top: 24px;
+    color: var(--gray);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.66;
+  }
+  .checklist { margin-top: 38px; display: flex; flex-direction: column; gap: 28px; }
+  .check-item { display: flex; gap: 16px; align-items: flex-start; }
+  .check-item .ck { flex: 0 0 auto; color: var(--coral); margin-top: 2px; }
+  .check-item p { font-size: 16.5px; font-weight: 500; color: var(--ink); line-height: 1.55; }
+
+  .sol-badge { text-align: center; margin-top: 56px; }
+  .sol-badge .txt {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 17px; font-weight: 700; color: var(--ink);
+  }
+  .sol-gallery {
+    display: flex; gap: 16px; margin-top: 26px;
+    padding: 4px var(--pad);
+    overflow-x: auto; scrollbar-width: none; scroll-snap-type: x mandatory;
+  }
+  .sol-gallery::-webkit-scrollbar { display: none; }
+  .sol-card {
+    flex: 0 0 58%;
+    scroll-snap-align: center;
+    background: var(--card-cream);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(26,20,16,0.06);
+  }
+  .sol-card .ph { border-radius: 18px 18px 0 0; }
+  .sol-card .label {
+    padding: 18px 18px 20px;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  /* ============ HOW IT WORKS ============ */
+  .how { background: var(--bg-soft); }
+  .how h2 { text-align: center; font-size: 30px; font-weight: 800; }
+  .how-sub { text-align: center; margin-top: 18px; color: var(--gray); font-size: 16px; font-weight: 500; }
+  .how-cards { display: flex; flex-direction: column; gap: 18px; margin-top: 40px; }
+  .how-card {
+    background: var(--white);
+    border-radius: 24px;
+    padding: 30px 28px 32px;
+    box-shadow: 0 10px 26px rgba(26,20,16,0.06);
+  }
+  .step-badge {
+    width: 44px; height: 44px;
+    background: var(--coral);
+    color: #fff;
+    border-radius: 999px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 19px; font-weight: 700;
+  }
+  .how-card .icons { display: flex; gap: 12px; margin-top: 30px; color: var(--coral); }
+  .how-card .title { margin-top: 26px; font-size: 21px; font-weight: 700; color: var(--ink); }
+  .how-card .desc { margin-top: 16px; font-size: 16px; font-weight: 500; color: var(--gray); line-height: 1.6; }
+
+  /* ============ COMPARISON ============ */
+  .compare { background: var(--bg-soft); padding-bottom: 72px; }
+  .compare h2 { text-align: center; font-size: 30px; font-weight: 800; line-height: 1.34; }
+  .compare-sub { text-align: center; margin-top: 22px; color: var(--gray); font-size: 16px; font-weight: 500; line-height: 1.62; }
+  .phones {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    align-items: end;
+    margin-top: 44px;
+  }
+  .pcol { display: flex; flex-direction: column; }
+  .phone {
+    border-radius: 30px;
+    padding: 9px;
+    overflow: hidden;
+  }
+  .phone.before { background: var(--ink); }
+  .phone.after {
+    background: var(--coral);
+    box-shadow: 0 12px 26px rgba(231,51,73,0.28);
+  }
+  .phone .screen {
+    background: #fff;
+    border-radius: 22px;
+    overflow: hidden;
+    aspect-ratio: 9 / 17;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .phone.after .screen .ph { width: 100%; height: 100%; aspect-ratio: auto; }
+  .phone .ph span { font-size: 10px; }
+  .cmp-shot { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+  .phone.after .cmp-shot { object-fit: contain; object-position: center; background: #fff; }
+  /* synced cross-fade stacks for the comparison phones */
+  .cmp-stack { position: relative; width: 100%; height: 100%; background: #fff; }
+  .cmp-layer {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: contain; object-position: center; background: #fff;
+    opacity: 0; transition: opacity .6s ease;
+  }
+  .cmp-layer.on { opacity: 1; }
+  .phone.before .cmp-layer { object-position: center top; }
+  /* 기존 코디 앱 social-feed UI (before phone) */
+  .cmp-before { display: flex; flex-direction: column; background: #fff; }
+  .cb-profile {
+    flex: 0 0 auto; display: flex; align-items: center; gap: 5px;
+    padding: 7px 8px 5px;
+  }
+  .cb-ava { width: 16px; height: 16px; border-radius: 50%; border: 1px solid #E2E2E2; display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
+  .cb-name { flex: 1; font-size: 9px; font-weight: 700; color: #222; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cb-name i { font-style: normal; font-weight: 500; color: #9a9a9a; }
+  .cb-dots { flex: 0 0 auto; }
+  .cb-body {
+    position: relative; flex: 1; min-height: 0;
+    border: 1px solid #EFEFEF; border-radius: 8px; margin: 0 6px; overflow: hidden;
+  }
+  .cb-body .cmp-layer { object-fit: contain; object-position: center; }
+  .cb-bubble {
+    position: absolute; left: 50%; bottom: 8px; transform: translateX(-50%); z-index: 3;
+    display: inline-flex; align-items: center; gap: 5px;
+    background: #3B7DED; color: #fff; font-size: 9px; font-weight: 700;
+    padding: 5px 9px; border-radius: 8px; white-space: nowrap;
+  }
+  .cb-bubble b { font-weight: 400; opacity: .85; }
+  .cb-icons { flex: 0 0 auto; display: flex; align-items: center; gap: 11px; padding: 7px 9px 4px; }
+  .cb-tags { flex: 0 0 auto; padding: 0 9px 6px; font-size: 8.5px; font-weight: 600; color: #3B7DED; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cb-nav {
+    flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between;
+    padding: 5px 12px 7px; border-top: 1px solid #F0F0F0;
+  }
+  .cb-nav span { display: flex; align-items: center; justify-content: center; }
+  .cb-nav .cb-plus { width: 24px; height: 24px; border-radius: 50%; background: #111; }
+  .cmp-aitag {
+    position: absolute; left: 8px; top: 8px; z-index: 3;
+    display: inline-flex; align-items: center; gap: 4px;
+    background: var(--coral); color: #fff;
+    font-size: 10px; font-weight: 700;
+    padding: 4px 9px; border-radius: 999px;
+  }
+  /* AI Coordinate phone — same UI as 나의 코디2 (status bar + header) */
+  .cmp-after { display: flex; flex-direction: column; }
+  .cmp-cstatus {
+    flex: 0 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 7px 11px 3px;
+    font-size: 10px; font-weight: 700; color: #111;
+  }
+  .cmp-cstatus .right { display: flex; align-items: center; gap: 4px; }
+  .cmp-cstatus .batt { background: #E5484D; color: #fff; font-size: 8px; font-weight: 700; padding: 0 4px; border-radius: 5px; }
+  .cmp-cheader {
+    flex: 0 0 auto; position: relative;
+    display: flex; align-items: center; justify-content: center;
+    height: 28px; border-bottom: 1px solid #F0F0F0;
+  }
+  .cmp-cheader .t { font-size: 13px; font-weight: 700; color: #111; }
+  .cmp-cheader .bk { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); color: #111; }
+  .cmp-cbody { position: relative; flex: 1; min-height: 0; }
+  .cmp-after .cmp-layer { position: absolute; left: 0; right: 0; top: 0; bottom: 0; width: 100%; height: 100%; }
+  .cmp-chint {
+    position: absolute; left: 0; right: 0; bottom: 8px; z-index: 3;
+    text-align: center; font-size: 9px; font-weight: 600; color: #9A9A9A;
+  }
+  .flatlay {
+    width: 100%; height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 8px;
+    padding: 14px;
+    background: #fff;
+  }
+  .flatlay .ph { aspect-ratio: auto; border-radius: 8px; }
+  .flatlay .ph span { font-size: 11px; }
+  .pl {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--gray);
+  }
+  .pl.hl { color: var(--coral); font-weight: 700; }
+
+  .dots { display: flex; justify-content: center; gap: 7px; margin-top: 26px; }
+  .dots i { width: 7px; height: 7px; border-radius: 999px; background: #e3cfc6; }
+  .dots i.on { width: 22px; background: var(--coral); }
+
+  /* comparison table */
+  .cmp-table {
+    width: 100%;
+    margin-top: 34px;
+    border-collapse: collapse;
+    background: var(--card-cream);
+    border: 1px solid #efe6d6;
+    border-radius: 16px;
+    overflow: hidden;
+    table-layout: fixed;
+  }
+  .cmp-table th, .cmp-table td {
+    padding: 16px 12px;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid #efe6d6;
+  }
+  .cmp-table thead th {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gray);
+    background: #FBF6E4;
+  }
+  .cmp-table thead th.hl { color: var(--coral); }
+  .cmp-table tbody tr:last-child td { border-bottom: none; }
+  .cmp-table .rowlabel {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gray);
+    width: 70px;
+  }
+  .cmp-table .neg, .cmp-table .pos {
+    font-size: 13.5px;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+  .cmp-table .neg { color: var(--gray); }
+  .cmp-table .pos { color: var(--ink); font-weight: 600; }
+  .cmp-table .x { color: #b9ada4; font-weight: 700; margin-right: 3px; }
+  .cmp-table .v { color: var(--coral); font-weight: 700; margin-right: 3px; }
+
+  .cta-bar {
+    display: block;
+    width: 100%;
+    margin-top: 28px;
+    background: var(--coral);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 17px;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(231,51,73,0.26);
+  }
+
+  /* ============ FINAL CTA ============ */
+  .final-cta {
+    background: linear-gradient(180deg, #FFF4ED 0%, #FDEBE1 60%, #FCE9DF 100%);
+    padding: 64px var(--pad) 0;
+    text-align: center;
+  }
+  .fc-title { font-size: 28px; font-weight: 800; color: var(--ink); }
+  .fc-sub { margin-top: 16px; color: var(--gray); font-size: 15.5px; font-weight: 500; }
+  .price-card {
+    margin-top: 36px;
+    background: #fff;
+    border-radius: 18px;
+    border-top: 5px solid var(--coral);
+    padding: 28px 26px 26px;
+    text-align: left;
+    box-shadow: 0 14px 30px rgba(26,20,16,0.08);
+  }
+  .pc-name { font-size: 18px; font-weight: 800; color: var(--ink); }
+  .pc-list { list-style: none; margin-top: 20px; display: flex; flex-direction: column; gap: 16px; }
+  .pc-list li {
+    display: flex; align-items: center; gap: 11px;
+    font-size: 15px; font-weight: 500; color: var(--ink);
+  }
+  .pc-list svg { flex: 0 0 auto; width: 16px; height: 16px; color: var(--coral); }
+  .cta.full { display: block; width: 100%; margin-top: 26px; }
+  .fc-note {
+    margin-top: 22px;
+    color: var(--gray);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.6;
+  }
+  .fc-note b { color: var(--ink); font-weight: 700; }
+  .site-footer { margin-top: 56px; padding: 26px 0 36px; border-top: 1px solid rgba(122,110,102,0.18); }
+  .site-footer .copy { font-size: 13px; font-weight: 500; color: var(--gray); }
+  .flinks { display: flex; justify-content: center; gap: 26px; margin-top: 16px; }
+  .flinks a { font-size: 13px; font-weight: 500; color: var(--gray); text-decoration: none; white-space: nowrap; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" data-screen-label="Hero">
+    <h1>옷장에 옷은 많은데,
+어떤 옷들이 있었더라?</h1>
+    <p class="hero-sub">당신의 비서가 옷장 속 수 많은 옷을,
+기록하고 보여드립니다.</p>
+    <button class="cta" type="button">무료로 시작하기</button>
+    <p class="cta-note">
+</p>
+  </section>
+
+  <!-- ============ PAIN ============ -->
+  <section class="pain" data-screen-label="Pain">
+    <h2>수많은 옷, 기억하기 쉽지 않죠?</h2>
+    <div class="pain-cards">
+      <div class="pain-card c-yellow">
+        <div class="lead">"옷장엔 쌓아두고, 머릿속엔 비워두고"</div>
+        <p class="body">옷장에 옷을 쌓아두다 정리 할 때가 와서야 
+"아 맞다 이런 옷이 있었지!" </p>
+      </div>
+      <div class="pain-card c-blue">
+        <div class="lead">"쇼핑 한 옷들이 내 옷들과 맞을지 걱정 이에요"</div>
+        <p class="body">즐겁게 구경 하다가도 막상 구매 할려 하면 집에 있는 내 옷들과 어울릴지 걱정이에요ㅠ.ㅜ</p>
+      </div>
+      <div class="pain-card c-green">
+        <div class="lead">"옷장 정리하자는 다짐만 수 십번 인가요?"</div>
+        <p class="body">안 입는 옷은 버리거나 중고거래하고 싶은데 너무 많은 옷에 정리할 엄두가 안 나요</p>
+      </div>
+    </div>
+  </section>
+
+    <div class="closet-section" style="background: linear-gradient(180deg,#F3ECFA 0%, #FFF6F1 100%); padding: 44px 0 40px; text-align: center;">
+      <div style="padding-top: 4px;">
+        <button class="pill-badge pill-btn pill-btn-purple" type="button" style="background:#7C5CC4;">내 옷장 한눈에 보기 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></button>
+        <p class="gallery-caption" style="color: rgb(189, 189, 189)">1.내 옷을 카테고리별로 <span style="color: rgb(231, 51, 73)">한눈에</span></p>
+      </div>
+      <div class="hgall">
+      <div class="hero-phone closet-phone">
+        <div class="hp-notch"></div>
+        <div class="hp-screen">
+          <div class="co-ui">
+            <div class="cl-status">
+              <span>U⁺ 1:22</span>
+              <span class="right">
+                <svg width="17" height="13" viewBox="0 0 17 13" fill="none" stroke="#222" stroke-width="1.6" stroke-linecap="round"><path d="M1 8.5 8.5 2 16 8.5"></path><path d="M4 11l4.5-4 4.5 4"></path></svg>
+                <svg width="18" height="13" viewBox="0 0 18 13" fill="#222"><rect x="1" y="6" width="2.5" height="6" rx="1"></rect><rect x="5" y="4" width="2.5" height="8" rx="1"></rect><rect x="9" y="2" width="2.5" height="10" rx="1"></rect><rect x="13" y="1" width="2.5" height="11" rx="1" fill="#C7C7C7"></rect></svg>
+                <span class="batt">15</span>
+              </span>
+            </div>
+            <div class="co-header">
+              <svg class="back" width="13" height="22" viewBox="0 0 13 22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2 2 11l9 9"></path></svg>
+              <span class="title">나의 옷장</span>
+            </div>
+            <div class="cl-filters">
+              <span class="cl-pill icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round"><circle cx="8" cy="6" r="2"></circle><line x1="11" y1="6" x2="21" y2="6"></line><line x1="3" y1="6" x2="6" y2="6"></line><circle cx="16" cy="12" r="2"></circle><line x1="3" y1="12" x2="14" y2="12"></line><line x1="18" y1="12" x2="21" y2="12"></line><circle cx="9" cy="18" r="2"></circle><line x1="12" y1="18" x2="21" y2="18"></line><line x1="3" y1="18" x2="7" y2="18"></line></svg>
+              </span>
+              <span class="cl-pill">모든 옷 <svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span>
+              <span class="cl-pill">등록일순 <svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span>
+              <span class="cl-add" style="background-color: rgb(255, 255, 255); color: rgb(24, 23, 23)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></span>
+            </div>
+            <div class="cl-tabs">
+              <span class="cl-tab on">전체<i class="dot"></i></span>
+              <span class="cl-tab">상의<i class="dot"></i></span>
+              <span class="cl-tab">하의<i class="dot"></i></span>
+              <span class="cl-tab">아우터<i class="dot"></i></span>
+              <span class="cl-tab">신발·벨트</span>
+            </div>
+            <div class="co-scroll">
+              <div class="co-track">
+                <div class="co-card" data-name="베이지 긴팔 티"><div class="co-img"><img src="assets/closet/ls_beige.png?v=2" alt="베이지 긴팔 티"></div><span class="co-name">베이지 긴팔 티</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="블루 셔츠"><div class="co-img"><img src="assets/closet/ls_blue.png?v=2" alt="블루 셔츠"></div><span class="co-name">블루 셔츠</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="스트라이프 긴팔"><div class="co-img"><img src="assets/closet/ls_stripe.png?v=2" alt="스트라이프 긴팔"></div><span class="co-name">스트라이프 긴팔</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="베이지 반팔 티"><div class="co-img"><img src="assets/closet/ss_beige.png?v=2" alt="베이지 반팔 티"></div><span class="co-name">베이지 반팔 티</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="블루 반팔 셔츠"><div class="co-img"><img src="assets/closet/ss_blue.png?v=2" alt="블루 반팔 셔츠"></div><span class="co-name">블루 반팔 셔츠</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="스트라이프 반팔"><div class="co-img"><img src="assets/closet/ss_stripe.png?v=2" alt="스트라이프 반팔"></div><span class="co-name">스트라이프 반팔</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="베이지 와이드 팬츠"><div class="co-img"><img src="assets/closet/pants_beige.png?v=2" alt="베이지 와이드 팬츠"></div><span class="co-name">베이지 와이드 팬츠</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="블루 와이드 데님"><div class="co-img"><img src="assets/closet/jeans_blue.png?v=2" alt="블루 와이드 데님"></div><span class="co-name">블루 와이드 데님</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="블랙 와이드 팬츠"><div class="co-img"><img src="assets/closet/pants_black.png?v=2" alt="블랙 와이드 팬츠"></div><span class="co-name">블랙 와이드 팬츠</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="베이지 숏팬츠"><div class="co-img"><img src="assets/closet/shorts_beige.png?v=2" alt="베이지 숏팬츠"></div><span class="co-name">베이지 숏팬츠</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="아이보리 데님 숏"><div class="co-img"><img src="assets/closet/shorts_ivory.png?v=2" alt="아이보리 데님 숏"></div><span class="co-name">아이보리 데님 숏</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="블랙 숏팬츠"><div class="co-img"><img src="assets/closet/shorts_black.png?v=2" alt="블랙 숏팬츠"></div><span class="co-name">블랙 숏팬츠</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="숏 자켓"><div class="co-img"><img src="assets/closet/jacket.png?v=2" alt="숏 자켓"></div><span class="co-name">숏 자켓</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="트렌치 코트"><div class="co-img"><img src="assets/closet/trench.png?v=2" alt="트렌치 코트"></div><span class="co-name">트렌치 코트</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="린넨 블레이저"><div class="co-img"><img src="assets/closet/blazer.png?v=2" alt="린넨 블레이저"></div><span class="co-name">린넨 블레이저</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="베이지 A라인 스커트"><div class="co-img"><img src="assets/closet/skirt_aline.png?v=2" alt="베이지 A라인 스커트"></div><span class="co-name">베이지 A라인 스커트</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="블랙 플리츠 스커트"><div class="co-img"><img src="assets/closet/skirt_black.png?v=2" alt="블랙 플리츠 스커트"></div><span class="co-name">블랙 플리츠 스커트</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="베이지 펜슬 스커트"><div class="co-img"><img src="assets/closet/skirt_pencil.png?v=2" alt="베이지 펜슬 스커트"></div><span class="co-name">베이지 펜슬 스커트</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="페니 로퍼"><div class="co-img"><img src="assets/closet/shoe_loafer.png?v=2" alt="페니 로퍼"></div><span class="co-name">페니 로퍼</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="더비 슈즈"><div class="co-img"><img src="assets/closet/shoe_derby.png?v=2" alt="더비 슈즈"></div><span class="co-name">더비 슈즈</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="첼시 부츠"><div class="co-img"><img src="assets/closet/shoe_chelsea.png?v=2" alt="첼시 부츠"></div><span class="co-name">첼시 부츠</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="브라운 벨트"><div class="co-img"><img src="assets/closet/belt_brown.png?v=2" alt="브라운 벨트"></div><span class="co-name">브라운 벨트</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="다크브라운 벨트"><div class="co-img"><img src="assets/closet/belt_dkbrown.png?v=2" alt="다크브라운 벨트"></div><span class="co-name">다크브라운 벨트</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="블랙 벨트"><div class="co-img"><img src="assets/closet/belt_black.png?v=2" alt="블랙 벨트"></div><span class="co-name">블랙 벨트</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+              </div>
+              <div class="co-fade"></div>
+            </div>
+            <div class="co-bar">
+              <div class="picked"><span class="k">선택한 옷</span><span class="v">트렌치 코트</span></div>
+              <button class="co-select" type="button">선택</button>
+            </div>
+            <div class="cz-zoom" aria-hidden="true">
+              <div class="cz-imgwrap"><img alt=""></div>
+              <div class="cz-cap"><span class="czk">내 옷장 속 아이템</span><span class="czv">트렌치 코트</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="gallery-caption" style="color: rgb(189, 189, 189)">2.카테고리별로 모아서 <span style="color: rgb(231, 51, 73)">한눈에</span></p>
+      <div class="hero-phone closet-cat-phone">
+        <div class="hp-notch"></div>
+        <div class="hp-screen">
+          <div class="co-ui">
+            <div class="cl-status">
+              <span>U⁺ 1:22</span>
+              <span class="right">
+                <svg width="17" height="13" viewBox="0 0 17 13" fill="none" stroke="#222" stroke-width="1.6" stroke-linecap="round"><path d="M1 8.5 8.5 2 16 8.5"></path><path d="M4 11l4.5-4 4.5 4"></path></svg>
+                <svg width="18" height="13" viewBox="0 0 18 13" fill="#222"><rect x="1" y="6" width="2.5" height="6" rx="1"></rect><rect x="5" y="4" width="2.5" height="8" rx="1"></rect><rect x="9" y="2" width="2.5" height="10" rx="1"></rect><rect x="13" y="1" width="2.5" height="11" rx="1" fill="#C7C7C7"></rect></svg>
+                <span class="batt">15</span>
+              </span>
+            </div>
+            <div class="co-header">
+              <svg class="back" width="13" height="22" viewBox="0 0 13 22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2 2 11l9 9"></path></svg>
+              <span class="title">나의 옷장</span>
+            </div>
+            <div class="cl-filters">
+              <span class="cl-pill icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round"><circle cx="8" cy="6" r="2"></circle><line x1="11" y1="6" x2="21" y2="6"></line><line x1="3" y1="6" x2="6" y2="6"></line><circle cx="16" cy="12" r="2"></circle><line x1="3" y1="12" x2="14" y2="12"></line><line x1="18" y1="12" x2="21" y2="12"></line><circle cx="9" cy="18" r="2"></circle><line x1="12" y1="18" x2="21" y2="18"></line><line x1="3" y1="18" x2="7" y2="18"></line></svg>
+              </span>
+              <span class="cl-pill">모든 옷 <svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span>
+              <span class="cl-pill">등록일순 <svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span>
+              <span class="cl-add" style="color: rgb(16, 16, 16); background-color: rgb(255, 255, 255)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></span>
+            </div>
+            <div class="cl-tabs">
+              <span class="cl-tab on">전체<i class="dot"></i></span>
+              <span class="cl-tab">상의<i class="dot"></i></span>
+              <span class="cl-tab">하의<i class="dot"></i></span>
+              <span class="cl-tab">아우터<i class="dot"></i></span>
+              <span class="cl-tab">신발·벨트</span>
+            </div>
+            <div class="co-scroll">
+              <div class="cat-grid">
+                <div class="cat-card"><div class="cat-img"><img src="assets/closet/ls_beige.png?v=2" alt="베이지 긴팔 티"></div><span class="cat-name">베이지 긴팔 티</span></div>
+                <div class="cat-card"><div class="cat-img"><img src="assets/closet/pants_beige.png?v=2" alt="베이지 와이드 팬츠"></div><span class="cat-name">베이지 와이드 팬츠</span></div>
+                <div class="cat-card"><div class="cat-img"><img src="assets/closet/jacket.png?v=2" alt="숏 자켓"></div><span class="cat-name">숏 자켓</span></div>
+                <div class="cat-card"><div class="cat-img"><img src="assets/closet/shoe_loafer.png?v=2" alt="페니 로퍼"></div><span class="cat-name">페니 로퍼</span></div>
+              </div>
+              <div class="co-fade"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="gallery-caption" style="color: rgb(189, 189, 189)">3.새 옷도 간편하게 <span style="color: rgb(231, 51, 73)">추가</span></p>
+      <div class="hero-phone closet-add-phone">
+        <div class="hp-notch"></div>
+        <div class="hp-screen">
+          <div class="co-ui">
+            <div class="cl-status">
+              <span>U⁺ 1:22</span>
+              <span class="right">
+                <svg width="17" height="13" viewBox="0 0 17 13" fill="none" stroke="#222" stroke-width="1.6" stroke-linecap="round"><path d="M1 8.5 8.5 2 16 8.5"></path><path d="M4 11l4.5-4 4.5 4"></path></svg>
+                <svg width="18" height="13" viewBox="0 0 18 13" fill="#222"><rect x="1" y="6" width="2.5" height="6" rx="1"></rect><rect x="5" y="4" width="2.5" height="8" rx="1"></rect><rect x="9" y="2" width="2.5" height="10" rx="1"></rect><rect x="13" y="1" width="2.5" height="11" rx="1" fill="#C7C7C7"></rect></svg>
+                <span class="batt">15</span>
+              </span>
+            </div>
+            <div class="co-header">
+              <svg class="back" width="13" height="22" viewBox="0 0 13 22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2 2 11l9 9"></path></svg>
+              <span class="title">나의 옷장</span>
+            </div>
+            <div class="cl-filters">
+              <span class="cl-pill icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round"><circle cx="8" cy="6" r="2"></circle><line x1="11" y1="6" x2="21" y2="6"></line><line x1="3" y1="6" x2="6" y2="6"></line><circle cx="16" cy="12" r="2"></circle><line x1="3" y1="12" x2="14" y2="12"></line><line x1="18" y1="12" x2="21" y2="12"></line><circle cx="9" cy="18" r="2"></circle><line x1="12" y1="18" x2="21" y2="18"></line><line x1="3" y1="18" x2="7" y2="18"></line></svg>
+              </span>
+              <span class="cl-pill">모든 옷 <svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span>
+              <span class="cl-pill">등록일순 <svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span>
+              <span class="cl-add" style="color: rgb(16, 16, 16); background-color: rgb(255, 255, 255)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></span>
+            </div>
+            <div class="cl-tabs">
+              <span class="cl-tab on">전체<i class="dot"></i></span>
+              <span class="cl-tab">상의<i class="dot"></i></span>
+              <span class="cl-tab">하의<i class="dot"></i></span>
+              <span class="cl-tab">아우터<i class="dot"></i></span>
+              <span class="cl-tab">신발·벨트</span>
+            </div>
+            <div class="co-scroll">
+              <div class="cat-grid">
+                <div class="cat-card"><div class="cat-img"><img src="assets/closet/ls_beige.png?v=2" alt="베이지 긴팔 티"></div><span class="cat-name">베이지 긴팔 티</span></div>
+                <div class="cat-card"><div class="cat-img"><img src="assets/closet/pants_beige.png?v=2" alt="베이지 와이드 팬츠"></div><span class="cat-name">베이지 와이드 팬츠</span></div>
+                <div class="cat-card"><div class="cat-img"><img src="assets/closet/jacket.png?v=2" alt="숏 자켓"></div><span class="cat-name">숏 자켓</span></div>
+                <div class="cat-card"><div class="cat-img"><img src="assets/closet/shoe_loafer.png?v=2" alt="페니 로퍼"></div><span class="cat-name">페니 로퍼</span></div>
+              </div>
+              <div class="co-fade"></div>
+            </div>
+            <div class="add-screen" aria-hidden="true">
+              <div class="as-top">
+                <svg class="as-back" width="12" height="20" viewBox="0 0 13 22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2 2 11l9 9"></path></svg>
+                <span class="as-toptitle">옷 추가</span>
+                <svg class="as-help" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>
+              </div>
+              <div class="as-h">옷장에 옷 추가하기</div>
+              <div class="as-grid as-grid-fill">
+                <div class="as-card dark">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.5-3.5L9 20"></path></svg>
+                  <span class="lbl">앨범</span>
+                </div>
+                <div class="as-card">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path><circle cx="12" cy="13" r="3"></circle></svg>
+                  <span class="lbl">카메라</span>
+                </div>
+                <div class="as-card">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                  <span class="lbl">WEB 검색</span>
+                </div>
+                <div class="as-card">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
+                  <span class="lbl">쇼핑몰 주문내역
+
+</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- hero gallery -->
+  <div class="hero-gallery-wrap" style="background: linear-gradient(180deg,#EAF7F1 0%, #FFF6F1 100%); padding: 0 0 36px;">
+    <div style="padding-top: 4px;">
+      <button class="pill-badge pill-btn" type="button">옷장 속 옷들로 새롭게 코디하기 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></button>
+      <p class="gallery-caption" style="color: rgb(189, 189, 189)">1. 당신의 비서가 만들어준 코디를 <span style="color: rgb(188, 33, 33)">한눈에</span></p>
+    </div>
+    <div class="hgall">
+      <div class="hero-phone coordi-phone">
+        <div class="hp-notch"></div>
+        <div class="hp-screen">
+          <div class="co-ui">
+            <div class="cl-status">
+              <span>U⁺ 1:22</span>
+              <span class="right">
+                <svg width="17" height="13" viewBox="0 0 17 13" fill="none" stroke="#222" stroke-width="1.6" stroke-linecap="round"><path d="M1 8.5 8.5 2 16 8.5"></path><path d="M4 11l4.5-4 4.5 4"></path></svg>
+                <svg width="18" height="13" viewBox="0 0 18 13" fill="#222"><rect x="1" y="6" width="2.5" height="6" rx="1"></rect><rect x="5" y="4" width="2.5" height="8" rx="1"></rect><rect x="9" y="2" width="2.5" height="10" rx="1"></rect><rect x="13" y="1" width="2.5" height="11" rx="1" fill="#C7C7C7"></rect></svg>
+                <span class="batt">15</span>
+              </span>
+            </div>
+            <div class="co-header">
+              <svg class="back" width="13" height="22" viewBox="0 0 13 22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2 2 11l9 9"></path></svg>
+              <span class="title">나의 코디
+</span>
+            </div>
+            <div class="cl-filters">
+              <span class="cl-pill icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round"><circle cx="8" cy="6" r="2"></circle><line x1="11" y1="6" x2="21" y2="6"></line><line x1="3" y1="6" x2="6" y2="6"></line><circle cx="16" cy="12" r="2"></circle><line x1="3" y1="12" x2="14" y2="12"></line><line x1="18" y1="12" x2="21" y2="12"></line><circle cx="9" cy="18" r="2"></circle><line x1="12" y1="18" x2="21" y2="18"></line><line x1="3" y1="18" x2="7" y2="18"></line></svg>
+              </span>
+              <span class="cl-pill">모든 옷 <svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span>
+              <span class="cl-pill">등록일순 <svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span>
+            </div>
+            <div class="cl-tabs">
+              <span class="cl-tab on">전체<i class="dot"></i></span>
+              <span class="cl-tab">캐쥬얼<i class="dot"></i></span>
+              <span class="cl-tab">포멀<i class="dot"></i></span>
+              <span class="cl-tab">클레식<i class="dot"></i></span>
+              <span class="cl-tab">빈티지</span>
+            </div>
+            <div class="co-scroll">
+              <div class="co-track">
+                <div class="co-card" data-name="셔츠 · 와이드 팬츠"><div class="co-img"><img src="assets/mannequins/casual_1.png?v=2" alt="셔츠 · 와이드 팬츠"></div><span class="co-name">셔츠 · 와이드 팬츠</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="폴로 니트 · 데님"><div class="co-img"><img src="assets/mannequins/casual_2.png?v=2" alt="폴로 니트 · 데님"></div><span class="co-name">폴로 니트 · 데님</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="자켓 · 롱스커트"><div class="co-img"><img src="assets/mannequins/casual_3.png?v=2" alt="자켓 · 롱스커트"></div><span class="co-name">자켓 · 롱스커트</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="니트 · 슬랙스"><div class="co-img"><img src="assets/mannequins/casual_4.png?v=2" alt="니트 · 슬랙스"></div><span class="co-name">니트 · 슬랙스</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="트위드 자켓 · 데님"><div class="co-img"><img src="assets/mannequins/vintage_2.png?v=2" alt="트위드 자켓 · 데님"></div><span class="co-name">트위드 자켓 · 데님</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="스트라이프 티 · 블랙 데님"><div class="co-img"><img src="assets/mannequins/casualB_2.png?v=2" alt="스트라이프 티 · 블랙 데님"></div><span class="co-name">스트라이프 티 · 블랙 데님</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="스트라이프 셔츠 · 브라운 팬츠"><div class="co-img"><img src="assets/mannequins/vintage_1.png?v=2" alt="스트라이프 셔츠 · 브라운 팬츠"></div><span class="co-name">스트라이프 셔츠 · 브라운 팬츠</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="데님 셔츠 · 화이트 팬츠"><div class="co-img"><img src="assets/mannequins/casualB_4.png?v=2" alt="데님 셔츠 · 화이트 팬츠"></div><span class="co-name">데님 셔츠 · 화이트 팬츠</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="케이블 니트 · 슬랙스"><div class="co-img"><img src="assets/mannequins/classic_1.png?v=2" alt="케이블 니트 · 슬랙스"></div><span class="co-name">케이블 니트 · 슬랙스</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="네이비 코트 · 그레이 팬츠"><div class="co-img"><img src="assets/mannequins/classic_4.png?v=2" alt="네이비 코트 · 그레이 팬츠"></div><span class="co-name">네이비 코트 · 그레이 팬츠</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="베이지 수트"><div class="co-img"><img src="assets/mannequins/formal_2.png?v=2" alt="베이지 수트"></div><span class="co-name">베이지 수트</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+                <div class="co-card" data-name="블랙 수트"><div class="co-img"><img src="assets/mannequins/formal_1.png?v=2" alt="블랙 수트"></div><span class="co-name">블랙 수트</span><span class="co-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+              </div>
+              <div class="co-fade"></div>
+            </div>
+            <div class="co-bar">
+              <div class="picked"><span class="k">선택한 코디</span><span class="v">셔츠 · 와이드 팬츠</span></div>
+              <button class="co-select" type="button">선택</button>
+            </div>
+            <div class="co-zoom" aria-hidden="true">
+              <div class="dt-hero">
+                <span class="dt-tag">✓ 선택한 코디</span>
+                <img alt="케이블 니트 코디">
+                <div class="dt-hint">
+                  <span>아래로 내려서 입은 옷 보기</span>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="gallery-caption" style="color: rgb(189, 189, 189)">2. 어떤 옷들을 사용했는지 <span style="color: rgb(188, 33, 33)">한눈에</span></p>
+      <div class="hero-phone detail-phone">
+        <div class="hp-notch"></div>
+        <div class="hp-screen">
+          <div class="co-ui">
+            <div class="cl-status">
+              <span>U⁺ 1:22</span>
+              <span class="right">
+                <svg width="17" height="13" viewBox="0 0 17 13" fill="none" stroke="#222" stroke-width="1.6" stroke-linecap="round"><path d="M1 8.5 8.5 2 16 8.5"></path><path d="M4 11l4.5-4 4.5 4"></path></svg>
+                <svg width="18" height="13" viewBox="0 0 18 13" fill="#222"><rect x="1" y="6" width="2.5" height="6" rx="1"></rect><rect x="5" y="4" width="2.5" height="8" rx="1"></rect><rect x="9" y="2" width="2.5" height="10" rx="1"></rect><rect x="13" y="1" width="2.5" height="11" rx="1" fill="#C7C7C7"></rect></svg>
+                <span class="batt">15</span>
+              </span>
+            </div>
+            <div class="co-header">
+              <svg class="back" width="13" height="22" viewBox="0 0 13 22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2 2 11l9 9"></path></svg>
+              <span class="title">나의 코디</span>
+            </div>
+            <div class="dt-scroll">
+              <div class="dt-track">
+                <div class="dt-hero">
+                  <span class="dt-tag">✓ 선택한 코디</span>
+                  <img src="assets/mannequins/classic_1.png?v=2" alt="케이블 니트 코디">
+                  <div class="dt-hint">
+                    <span>아래로 내려서 입은 옷 보기</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
+                  </div>
+                </div>
+                <div class="dt-sheet">
+                  <div class="dt-grab"></div>
+                  <div class="dt-name">케이블 니트 코디</div>
+                  <div class="dt-desc">내 옷장 속 4개 아이템으로 완성한 코디예요</div>
+                  <div class="dt-sectlabel">이 코디를 구성하는 옷 <span class="cnt">4</span></div>
+                  <div class="dt-items">
+                <div class="dt-item"><div class="dt-thumb"><img src="assets/items/top.png?v=2" alt="케이블 니트 셔츠"></div><div class="dt-meta"><div class="dt-cat">상의</div><div class="dt-label">케이블 니트 셔츠</div></div></div>
+                <div class="dt-item"><div class="dt-thumb"><img src="assets/items/pants.png?v=2" alt="와이드 슬랙스"></div><div class="dt-meta"><div class="dt-cat">바지</div><div class="dt-label">와이드 슬랙스</div></div></div>
+                <div class="dt-item"><div class="dt-thumb"><img src="assets/items/belt.png?v=2" alt="브라운 레더 벨트"></div><div class="dt-meta"><div class="dt-cat">벨트</div><div class="dt-label">브라운 레더 벨트</div></div></div>
+                <div class="dt-item"><div class="dt-thumb"><img src="assets/items/shoes.png?v=2" alt="페니 로퍼"></div><div class="dt-meta"><div class="dt-cat">신발</div><div class="dt-label">페니 로퍼</div></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>      <p class="gallery-caption" style="color: rgb(189, 189, 189)">3. 캐쥬얼,포멀,클래식,빈티지를 <span style="color: rgb(188, 33, 33)">한눈에</span></p>
+      <div class="hero-phone category-phone">
+        <div class="hp-notch"></div>
+        <div class="hp-screen">
+          <div class="co-ui">
+            <div class="cl-status">
+              <span>U⁺ 1:22</span>
+              <span class="right">
+                <svg width="17" height="13" viewBox="0 0 17 13" fill="none" stroke="#222" stroke-width="1.6" stroke-linecap="round"><path d="M1 8.5 8.5 2 16 8.5"></path><path d="M4 11l4.5-4 4.5 4"></path></svg>
+                <svg width="18" height="13" viewBox="0 0 18 13" fill="#222"><rect x="1" y="6" width="2.5" height="6" rx="1"></rect><rect x="5" y="4" width="2.5" height="8" rx="1"></rect><rect x="9" y="2" width="2.5" height="10" rx="1"></rect><rect x="13" y="1" width="2.5" height="11" rx="1" fill="#C7C7C7"></rect></svg>
+                <span class="batt">15</span>
+              </span>
+            </div>
+            <div class="co-header">
+              <svg class="back" width="13" height="22" viewBox="0 0 13 22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2 2 11l9 9"></path></svg>
+              <span class="title">나의 코디</span>
+            </div>
+            <div class="cl-filters">
+              <span class="cl-pill icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round"><circle cx="8" cy="6" r="2"></circle><line x1="11" y1="6" x2="21" y2="6"></line><line x1="3" y1="6" x2="6" y2="6"></line><circle cx="16" cy="12" r="2"></circle><line x1="3" y1="12" x2="14" y2="12"></line><line x1="18" y1="12" x2="21" y2="12"></line><circle cx="9" cy="18" r="2"></circle><line x1="12" y1="18" x2="21" y2="18"></line><line x1="3" y1="18" x2="7" y2="18"></line></svg>
+              </span>
+              <span class="cl-pill">모든 옷 <svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span>
+              <span class="cl-pill">등록일순 <svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span>
+            </div>
+            <div class="cl-tabs">
+              <span class="cl-tab on">전체<i class="dot"></i></span>
+              <span class="cl-tab">캐쥬얼<i class="dot"></i></span>
+              <span class="cl-tab">포멀<i class="dot"></i></span>
+              <span class="cl-tab">클레식<i class="dot"></i></span>
+              <span class="cl-tab">빈티지</span>
+            </div>
+            <div class="co-scroll">
+              <div class="cat-grid">
+                <div class="cat-card"><div class="cat-img"><img src="assets/mannequins/casual_1.png?v=2" alt="셔츠 · 와이드 팬츠"></div><span class="cat-name">셔츠 · 와이드 팬츠</span></div>
+                <div class="cat-card"><div class="cat-img"><img src="assets/mannequins/vintage_1.png?v=2" alt="스트라이프 셔츠 · 브라운 팬츠"></div><span class="cat-name">스트라이프 셔츠 · 브라운 팬츠</span></div>
+                <div class="cat-card"><div class="cat-img"><img src="assets/mannequins/classic_1.png?v=2" alt="케이블 니트 · 슬랙스"></div><span class="cat-name">케이블 니트 · 슬랙스</span></div>
+                <div class="cat-card"><div class="cat-img"><img src="assets/mannequins/formal_1.png?v=2" alt="블랙 수트"></div><span class="cat-name">블랙 수트</span></div>
+              </div>
+              <div class="co-fade"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+
+  <!-- ============ SOLUTION ============ -->
+  <section class="solution" data-screen-label="Solution">
+    <h2 class="coral">상상하지 마세요.<br />직접 보세요</h2>
+    <div class="checklist">
+      <div class="check-item">
+        <svg class="ck" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+        <p>네 가지 방식으로 간편하게 옷 등록</p>
+      </div>
+      <div class="check-item">
+        <svg class="ck" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+        <p>마네킹이 입은 모습으로  핏·실루엣까지 한눈에</p>
+      </div>
+      
+    </div>
+
+  </section>
+
+  <!-- ============ COMPARISON ============ -->
+  <section class="compare" data-screen-label="Comparison">
+    <h2><span class="coral">같은 코디,</span> <span style="color: rgb(16, 16, 16)">다른느낌</span></h2>
+    <p class="compare-sub">뒤죽박죽 상상이 안가는 코디는 이제 그만<br />눈으로 보고 한번에 딱!</p>
+    <div class="phones">
+      <div class="pcol">
+        <div class="phone before">
+          <div class="screen">
+            <div class="cmp-stack cmp-before">
+              <div class="cb-profile">
+                <span class="cb-ava"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#9a9a9a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 20c0-4 4-6 8-6s8 2 8 6"></path></svg></span>
+                <span class="cb-name">15일 전</span>
+                <span class="cb-dots"><svg width="11" height="11" viewBox="0 0 24 24" fill="#999"><circle cx="12" cy="5" r="1.6"></circle><circle cx="12" cy="12" r="1.6"></circle><circle cx="12" cy="19" r="1.6"></circle></svg></span>
+              </div>
+              <div class="cb-body">
+                <img class="cmp-layer on" src="assets/compare/fl_cargo.png?v=2" alt="기존 코디 앱 — 가디건 코디">
+                <img class="cmp-layer" src="assets/compare/fl_denim.png?v=2" alt="기존 코디 앱 — 데님 코디">
+                <img class="cmp-layer" src="assets/compare/fl_skirt.png?v=2" alt="기존 코디 앱 — 셔츠 스커트 코디">
+                <img class="cmp-layer" src="assets/compare/fl_blazer.png?v=2" alt="기존 코디 앱 — 블레이저 코디">
+              </div>
+              <div class="cb-icons">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"></path></svg>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-4-.9L3 20l1-3.9A8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5z"></path></svg>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.4 7 16 5a4 4 0 0 1-8 0L3.6 7a2 2 0 0 0-1.3 2.2l.6 3.5a1 1 0 0 0 1 .8H6v6a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-6h2.1a1 1 0 0 0 1-.8l.6-3.5A2 2 0 0 0 20.4 7z"></path></svg>
+              </div>
+              <div class="cb-tags">
+</div>
+              <div class="cb-nav">
+                <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"></path><path d="M5 10v10h14V10"></path></svg></span>
+                <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M12 3v18"></path></svg></span>
+                <span class="cb-plus"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></span>
+                <span><svg width="14" height="14" viewBox="0 0 24 24" fill="#222"><path d="M12 2a3 3 0 0 1 3 3c0 .6-.2 1.2-.5 1.7L18 8a2 2 0 0 1 1 1.7V20a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V9.7A2 2 0 0 1 6 8l3.5-1.3A3 3 0 0 1 9 5a3 3 0 0 1 3-3z"></path></svg></span>
+                <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="m15 9-4 1.5L9.5 15 13.5 13.5z"></path></svg></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pl">기존 코디 앱</div>
+      </div>
+      <div class="pcol">
+        <div class="phone after">
+          <div class="screen">
+            <div class="cmp-stack cmp-after">
+              <div class="cmp-cstatus">
+                <span>U⁺ 1:22</span>
+                <span class="right">
+                  <svg width="13" height="10" viewBox="0 0 17 13" fill="none" stroke="#222" stroke-width="1.6" stroke-linecap="round"><path d="M1 8.5 8.5 2 16 8.5"></path><path d="M4 11l4.5-4 4.5 4"></path></svg>
+                  <span class="batt">15</span>
+                </span>
+              </div>
+              <div class="cmp-cheader">
+                <svg class="bk" width="9" height="15" viewBox="0 0 13 22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2 2 11l9 9"></path></svg>
+                <span class="t">나의 코디</span>
+              </div>
+              <div class="cmp-cbody">
+                <span class="cmp-aitag"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>선택한 코디</span>
+                <img class="cmp-layer on" src="assets/compare/mn_cargo.jpg?v=2" alt="AI Coordinate — 가디건 코디">
+                <img class="cmp-layer" src="assets/compare/mn_denim.jpg?v=2" alt="AI Coordinate — 데님 코디">
+                <img class="cmp-layer" src="assets/compare/mn_skirt.jpg?v=2" alt="AI Coordinate — 셔츠 스커트 코디">
+                <img class="cmp-layer" src="assets/compare/mn_blazer.jpg?v=2" alt="AI Coordinate — 블레이저 코디">
+                <div class="cmp-chint">아래로 내려서 입은 옷 보기</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pl hl">AI Coordinate</div>
+      </div>
+    </div>
+
+    <div class="dots"><i class="on"></i><i></i><i></i><i></i></div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th>항목</th>
+          <th>기존 코디 앱</th>
+          <th class="hl">AI Coordinate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="rowlabel">코디 표현</td>
+          <td class="neg">✕ 쇼핑몰 모델 사진 그대로</td>
+          <td class="pos">✓ 마네킹에 일관되게</td>
+        </tr>
+        <tr>
+          <td class="rowlabel">내 모습 반영</td>
+          <td class="neg"><span class="x">✕</span> 남의 모델 사진뿐</td>
+          <td class="pos">✓ 나와 같은 체형의 마네킹</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button class="cta-bar" type="button">무료로 시작하기</button>
+  </section>
+
+  <!-- ============ FINAL CTA ============ -->
+  <section class="final-cta" data-screen-label="FinalCTA">
+    <footer class="site-footer">
+      <p class="copy">© 2026 Coordi. 모든 권리 보유.</p>
+      <div class="flinks"><a href="#">개인정보처리방침</a><a href="#">문의</a></div>
+    </footer>
+  </section>
+
+</div>
+
+
+
+<script>
+(function(){
+  function initCoordi(ui){
+    var track = ui.querySelector('.co-track');
+    var scroll = ui.querySelector('.co-scroll');
+    var bar = ui.querySelector('.co-bar');
+    var pickedV = bar.querySelector('.picked .v');
+    var selectBtn = ui.querySelector('.co-select');
+    var zoom = ui.querySelector('.co-zoom');
+    var zoomImg = zoom ? zoom.querySelector('img') : null;
+    var zoomName = zoom ? zoom.querySelector('.zv') : null;
+    if(!track || !zoom) return;
+
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var cards = Array.prototype.slice.call(track.querySelectorAll('.co-card'));
+    // the coordi that 나의 코디2 continues from — settle + zoom on this one for a seamless handoff
+    var FINAL_NAME = '케이블 니트 · 슬랙스';
+    function finalCard(){
+      for(var i=0;i<cards.length;i++){ if(cards[i].getAttribute('data-name')===FINAL_NAME) return cards[i]; }
+      return cards[0];
+    }
+    var y = 0, raf = null, timers = [];
+
+    function setY(v){ y = v; track.style.transform = 'translateY(' + v + 'px)'; }
+    function viewportH(){ return scroll.clientHeight; }
+    function maxScroll(){ return Math.max(0, track.scrollHeight - viewportH()); }
+    function later(fn, ms){ timers.push(setTimeout(fn, ms)); }
+    function clearTimers(){ timers.forEach(clearTimeout); timers = []; if(raf) cancelAnimationFrame(raf); }
+
+    var easeInOut = function(t){ return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2; };
+    var easeOut = function(t){ return 1 - Math.pow(1-t, 3); };
+    function tween(from, to, dur, ease, onUpdate, onDone){
+      var start = performance.now();
+      (function step(now){
+        var t = Math.min(1, (now - start) / dur);
+        onUpdate(from + (to - from) * ease(t));
+        if(t < 1){ raf = requestAnimationFrame(step); }
+        else if(onDone){ onDone(); }
+      })(start);
+    }
+
+    function clearSel(){ cards.forEach(function(c){ c.classList.remove('sel'); }); }
+    function reset(){
+      clearSel();
+      bar.classList.remove('shown');
+      zoom.classList.remove('show');
+      selectBtn.classList.remove('press');
+      selectBtn.textContent = '선택';
+      selectBtn.style.background = '';
+      selectBtn.style.boxShadow = '';
+      setY(0);
+    }
+    function pickCenterCard(){
+      var center = -y + viewportH()/2, best = cards[0], bestD = Infinity;
+      cards.forEach(function(c){
+        var cc = c.offsetTop + c.offsetHeight/2;
+        var d = Math.abs(cc - center);
+        if(d < bestD){ bestD = d; best = c; }
+      });
+      return best;
+    }
+
+    function play(){
+      clearTimers();
+      reset();
+      if(reduce){
+        var c = cards[4] || cards[0];
+        c.classList.add('sel');
+        pickedV.textContent = c.getAttribute('data-name');
+        bar.classList.add('shown');
+        later(play, 6000);
+        return;
+      }
+      // PHASE 1 — auto-scroll down through the mannequins, stopping at the 케이블 니트 코디
+      var card = finalCard();
+      var desiredEnd = Math.max(-maxScroll(), Math.min(0, viewportH()/2 - (card.offsetTop + card.offsetHeight/2)));
+      tween(0, desiredEnd, 5200, easeInOut, setY, function(){
+        {
+          later(function(){
+            // check it + raise the select bar
+            card.classList.add('sel');
+            pickedV.textContent = card.getAttribute('data-name');
+            bar.classList.add('shown');
+            // PHASE 3 — press 선택
+            later(function(){
+              selectBtn.classList.add('press');
+              selectBtn.textContent = '선택 완료 ✓';
+              selectBtn.style.background = '#1F8A5B';
+              selectBtn.style.boxShadow = '0 8px 18px rgba(31,138,91,0.30)';
+              // PHASE 4 — enlarge the chosen mannequin (matches 나의 코디2 start)
+              later(function(){
+                var img = card.querySelector('img');
+                zoomImg.src = img.currentSrc || img.src;
+                if(zoomName) zoomName.textContent = card.getAttribute('data-name');
+                zoom.classList.add('show');
+                // hold, then loop
+                later(function(){
+                  zoom.classList.remove('show');
+                  later(play, 760);
+                }, 2900);
+              }, 650);
+            }, 1000);
+          }, 450);
+        }
+      });
+    }
+
+    var started = false;
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if(en.isIntersecting && en.intersectionRatio > 0.1){
+            if(!started){ started = true; play(); }
+          } else if(!en.isIntersecting){
+            // fully left view — stop so it replays from the top on return
+            started = false;
+            clearTimers();
+            reset();
+          }
+        });
+      }, { threshold: [0, 0.1, 0.5] });
+      io.observe(ui);
+      setTimeout(function(){ if(!started){ started = true; play(); } }, 1700);
+    } else {
+      var t0 = setTimeout(play, 500);
+      timers.push(t0);
+    }
+  }
+  function initDetail(ui){
+    var scroll = ui.querySelector('.dt-scroll');
+    var track = ui.querySelector('.dt-track');
+    var hint = ui.querySelector('.dt-hint');
+    if(!track) return;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var y = 0, raf = null, timers = [];
+    function setY(v){ y = v; track.style.transform = 'translateY(' + v + 'px)'; }
+    function later(fn, ms){ timers.push(setTimeout(fn, ms)); }
+    function clearAll(){ timers.forEach(clearTimeout); timers = []; if(raf) cancelAnimationFrame(raf); }
+    var easeInOut = function(t){ return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2; };
+    function tween(from, to, dur, onDone){
+      var start = performance.now();
+      (function step(now){
+        var t = Math.min(1, (now - start) / dur);
+        setY(from + (to - from) * easeInOut(t));
+        if(t < 1){ raf = requestAnimationFrame(step); } else if(onDone){ onDone(); }
+      })(start);
+    }
+    function maxScroll(){ return Math.max(0, track.scrollHeight - scroll.clientHeight); }
+    function play(){
+      clearAll();
+      setY(0);
+      if(hint) hint.style.opacity = '1';
+      if(reduce){ setY(-maxScroll()); return; }
+      // hold on the enlarged mannequin, then scroll down to reveal worn items
+      later(function(){
+        if(hint) hint.style.opacity = '0';
+        tween(0, -maxScroll(), 2600, function(){
+          // hold on items, then return to the mannequin and loop
+          later(function(){
+            tween(-maxScroll(), 0, 1400, function(){
+              if(hint) hint.style.opacity = '1';
+              later(play, 1400);
+            });
+          }, 2600);
+        });
+      }, 1600);
+    }
+    if(hint) hint.style.transition = 'opacity .4s ease';
+    var started = false;
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if(en.isIntersecting && en.intersectionRatio > 0.1){ if(!started){ started = true; play(); } }
+          else if(!en.isIntersecting){ started = false; clearAll(); setY(0); if(hint) hint.style.opacity='1'; }
+        });
+      }, { threshold: [0, 0.1, 0.5] });
+      io.observe(ui);
+      setTimeout(function(){ if(!started){ started = true; play(); } }, 1700);
+    } else { later(play, 500); }
+  }
+  function initCategory(ui){
+    var tabs = Array.prototype.slice.call(ui.querySelectorAll('.cl-tab'));
+    var grid = ui.querySelector('.cat-grid');
+    if(!grid || !tabs.length) return;
+    var cells = Array.prototype.slice.call(grid.querySelectorAll('.cat-card'));
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var sets = [
+      { tab:0, cards:[['casual_1','셔츠 · 와이드 팬츠'],['vintage_1','스트라이프 셔츠 · 브라운 팬츠'],['classic_1','케이블 니트 · 슬랙스'],['formal_1','블랙 수트']] },
+      { tab:1, cards:[['casual_1','셔츠 · 와이드 팬츠'],['casual_2','폴로 니트 · 데님'],['casual_4','니트 · 슬랙스'],['casualB_2','스트라이프 티 · 블랙 데님']] },
+      { tab:2, cards:[['formal_1','블랙 수트'],['formal_2','베이지 수트'],['formal_3','네이비 수트'],['formal_4','차콜 수트']] },
+      { tab:3, cards:[['classic_1','케이블 니트 · 슬랙스'],['classic_2','코트 · 터틀넥'],['classic_3','블레이저 · 슬랙스'],['classic_4','네이비 코트 · 그레이 팬츠']] },
+      { tab:4, cards:[['vintage_1','스트라이프 셔츠 · 브라운 팬츠'],['vintage_2','트위드 자켓 · 데님'],['vintage_3','코듀로이 · 니트'],['vintage_4','체크 셔츠 · 치노']] }
+    ];
+    var idx = 0, timers = [];
+    function clearTimers(){ timers.forEach(clearTimeout); timers = []; }
+    function setTab(n){ tabs.forEach(function(t,i){ t.classList.toggle('on', i===n); }); }
+    function render(set){
+      set.cards.forEach(function(c,i){
+        var cell = cells[i]; if(!cell) return;
+        var img = cell.querySelector('img');
+        img.src = 'assets/mannequins/' + c[0] + '.png?v=2';
+        img.alt = c[1];
+        cell.querySelector('.cat-name').textContent = c[1];
+      });
+    }
+    function step(){
+      var set = sets[idx];
+      setTab(set.tab);
+      grid.classList.add('fading');
+      timers.push(setTimeout(function(){
+        render(set);
+        grid.classList.remove('fading');
+        timers.push(setTimeout(function(){
+          idx = (idx + 1) % sets.length;
+          step();
+        }, 1800));
+      }, 380));
+    }
+    function play(){ clearTimers(); idx = 0; if(reduce){ setTab(0); render(sets[0]); return; } step(); }
+    var started = false;
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if(en.isIntersecting && en.intersectionRatio > 0.1){ if(!started){ started = true; play(); } }
+          else if(!en.isIntersecting){ started = false; clearTimers(); setTab(0); grid.classList.remove('fading'); render(sets[0]); }
+        });
+      }, { threshold: [0, 0.1, 0.5] });
+      io.observe(ui);
+      setTimeout(function(){ if(!started){ started = true; play(); } }, 1700);
+    } else { play(); }
+  }
+  function initCloset(ui){
+    var track = ui.querySelector('.co-track');
+    var scroll = ui.querySelector('.co-scroll');
+    var bar = ui.querySelector('.co-bar');
+    var pickedV = bar.querySelector('.picked .v');
+    var selectBtn = ui.querySelector('.co-select');
+    var zoom = ui.querySelector('.cz-zoom');
+    var zoomImg = zoom ? zoom.querySelector('img') : null;
+    var zoomName = zoom ? zoom.querySelector('.czv') : null;
+    if(!track || !zoom) return;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var cards = Array.prototype.slice.call(track.querySelectorAll('.co-card'));
+    var HERO = '트렌치 코트';
+    function heroCard(){ for(var i=0;i<cards.length;i++){ if(cards[i].getAttribute('data-name')===HERO) return cards[i]; } return cards[0]; }
+    var y = 0, raf = null, timers = [];
+    function setY(v){ y = v; track.style.transform = 'translateY(' + v + 'px)'; }
+    function viewportH(){ return scroll.clientHeight; }
+    function maxScroll(){ return Math.max(0, track.scrollHeight - viewportH()); }
+    function later(fn, ms){ timers.push(setTimeout(fn, ms)); }
+    function clearTimers(){ timers.forEach(clearTimeout); timers = []; if(raf) cancelAnimationFrame(raf); }
+    var easeInOut = function(t){ return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2; };
+    function tween(from, to, dur, onDone){
+      var start = performance.now();
+      (function step(now){
+        var t = Math.min(1, (now - start) / dur);
+        setY(from + (to - from) * easeInOut(t));
+        if(t < 1){ raf = requestAnimationFrame(step); } else if(onDone){ onDone(); }
+      })(start);
+    }
+    function clearSel(){ cards.forEach(function(c){ c.classList.remove('sel'); }); }
+    function reset(){
+      clearSel(); bar.classList.remove('shown'); zoom.classList.remove('show');
+      selectBtn.classList.remove('press'); selectBtn.textContent = '선택';
+      selectBtn.style.background = ''; selectBtn.style.boxShadow = ''; setY(0);
+    }
+    function play(){
+      clearTimers(); reset();
+      var card = heroCard();
+      var desired = Math.max(-maxScroll(), Math.min(0, viewportH()/2 - (card.offsetTop + card.offsetHeight/2)));
+      if(reduce){ setY(desired); card.classList.add('sel'); bar.classList.add('shown'); return; }
+      // PHASE 1 — auto-scroll down to the chosen item
+      tween(0, desired, 4600, function(){
+        later(function(){
+          card.classList.add('sel');
+          pickedV.textContent = card.getAttribute('data-name');
+          bar.classList.add('shown');
+          // PHASE 2 — press 선택
+          later(function(){
+            selectBtn.classList.add('press');
+            selectBtn.textContent = '선택 완료 ✓';
+            selectBtn.style.background = '#1F8A5B';
+            selectBtn.style.boxShadow = '0 8px 18px rgba(31,138,91,0.30)';
+            // PHASE 3 — enlarge the chosen item
+            later(function(){
+              var img = card.querySelector('img');
+              zoomImg.src = img.currentSrc || img.src;
+              if(zoomName) zoomName.textContent = card.getAttribute('data-name');
+              zoom.classList.add('show');
+              later(function(){ zoom.classList.remove('show'); later(play, 820); }, 2600);
+            }, 650);
+          }, 1000);
+        }, 450);
+      });
+    }
+    var started = false;
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if(en.isIntersecting && en.intersectionRatio > 0.1){ if(!started){ started = true; play(); } }
+          else if(!en.isIntersecting){ started = false; clearTimers(); reset(); }
+        });
+      }, { threshold: [0, 0.1, 0.5] });
+      io.observe(ui);
+      setTimeout(function(){ if(!started){ started = true; play(); } }, 1700);
+    } else { later(play, 500); }
+  }
+  function initClosetCat(ui){
+    var tabs = Array.prototype.slice.call(ui.querySelectorAll('.cl-tab'));
+    var grid = ui.querySelector('.cat-grid');
+    if(!grid || !tabs.length) return;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var sets = [
+      { tab:0, cards:[['ls_beige','베이지 긴팔 티'],['pants_beige','베이지 와이드 팬츠'],['jacket','숏 자켓'],['shoe_loafer','페니 로퍼']] },
+      { tab:1, cards:[['ls_beige','베이지 긴팔 티'],['ls_blue','블루 셔츠'],['ss_beige','베이지 반팔 티'],['ss_stripe','스트라이프 반팔']] },
+      { tab:2, cards:[['pants_beige','베이지 와이드 팬츠'],['jeans_blue','블루 와이드 데님'],['shorts_beige','베이지 숏팬츠'],['skirt_aline','베이지 A라인 스커트']] },
+      { tab:3, cards:[['jacket','숏 자켓'],['trench','트렌치 코트'],['blazer','린넨 블레이저']] },
+      { tab:4, cards:[['shoe_loafer','페니 로퍼'],['shoe_derby','더비 슈즈'],['belt_brown','브라운 벨트'],['belt_black','블랙 벨트']] }
+    ];
+    var idx = 0, timers = [];
+    function clearTimers(){ timers.forEach(clearTimeout); timers = []; }
+    function setTab(n){ tabs.forEach(function(t,i){ t.classList.toggle('on', i===n); }); }
+    function render(set){
+      grid.innerHTML = set.cards.map(function(c){
+        return '<div class="cat-card"><div class="cat-img"><img src="assets/closet/' + c[0] + '.png?v=2" alt="' + c[1] + '"></div><span class="cat-name">' + c[1] + '</span></div>';
+      }).join('');
+    }
+    function step(){
+      var set = sets[idx];
+      setTab(set.tab);
+      grid.classList.add('fading');
+      timers.push(setTimeout(function(){
+        render(set);
+        grid.classList.remove('fading');
+        timers.push(setTimeout(function(){ idx = (idx + 1) % sets.length; step(); }, 1800));
+      }, 380));
+    }
+    function play(){ clearTimers(); idx = 0; if(reduce){ setTab(0); render(sets[0]); return; } step(); }
+    var started = false;
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if(en.isIntersecting && en.intersectionRatio > 0.1){ if(!started){ started = true; play(); } }
+          else if(!en.isIntersecting){ started = false; clearTimers(); setTab(0); grid.classList.remove('fading'); render(sets[0]); }
+        });
+      }, { threshold: [0, 0.1, 0.5] });
+      io.observe(ui);
+      setTimeout(function(){ if(!started){ started = true; play(); } }, 1700);
+    } else { play(); }
+  }
+  function initClosetAdd(ui){
+    var plus = ui.querySelector('.cl-add');
+    var screen = ui.querySelector('.add-screen');
+    if(!plus || !screen) return;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var timers = [];
+    function later(fn, ms){ timers.push(setTimeout(fn, ms)); }
+    function clearTimers(){ timers.forEach(clearTimeout); timers = []; }
+    function reset(){ screen.classList.remove('show'); plus.classList.remove('pulse'); }
+    function play(){
+      clearTimers(); reset();
+      if(reduce){ screen.classList.add('show'); return; }
+      // pulse the + button, then slide the 옷 추가 screen up
+      later(function(){
+        plus.classList.add('pulse');
+        later(function(){ plus.classList.remove('pulse'); screen.classList.add('show'); }, 430);
+        // hold, then close and loop
+        later(function(){ screen.classList.remove('show'); later(play, 1100); }, 4200);
+      }, 1500);
+    }
+    var started = false;
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if(en.isIntersecting && en.intersectionRatio > 0.1){ if(!started){ started = true; play(); } }
+          else if(!en.isIntersecting){ started = false; clearTimers(); reset(); }
+        });
+      }, { threshold: [0, 0.1, 0.5] });
+      io.observe(ui);
+      setTimeout(function(){ if(!started){ started = true; play(); } }, 1700);
+    } else { play(); }
+  }
+  function initCompare(){
+    var sec = document.querySelector('.compare');
+    if(!sec) return;
+    var beforeLayers = Array.prototype.slice.call(sec.querySelectorAll('.cmp-before .cmp-layer'));
+    var afterLayers = Array.prototype.slice.call(sec.querySelectorAll('.cmp-after .cmp-layer'));
+    var dots = Array.prototype.slice.call(sec.querySelectorAll('.dots i'));
+    if(!beforeLayers.length) return;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var n = beforeLayers.length, idx = 0, timer = null;
+    function show(i){
+      beforeLayers.forEach(function(l,k){ l.classList.toggle('on', k===i); });
+      afterLayers.forEach(function(l,k){ l.classList.toggle('on', k===i); });
+      dots.forEach(function(d,k){ d.classList.toggle('on', k===i); });
+    }
+    function step(){ idx = (idx + 1) % n; show(idx); }
+    function play(){ if(timer) clearInterval(timer); idx = 0; show(0); if(!reduce){ timer = setInterval(step, 2200); } }
+    var started = false;
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if(en.isIntersecting && en.intersectionRatio > 0.15){ if(!started){ started = true; play(); } }
+          else if(!en.isIntersecting){ started = false; if(timer) clearInterval(timer); idx = 0; show(0); }
+        });
+      }, { threshold: [0, 0.15, 0.5] });
+      io.observe(sec.querySelector('.phones'));
+      setTimeout(function(){ if(!started){ started = true; play(); } }, 1700);
+    } else { play(); }
+  }
+  function boot(){
+    document.querySelectorAll('.coordi-phone .co-ui').forEach(initCoordi);
+    document.querySelectorAll('.detail-phone .co-ui').forEach(initDetail);
+    document.querySelectorAll('.category-phone .co-ui').forEach(initCategory);
+    document.querySelectorAll('.closet-phone .co-ui').forEach(initCloset);
+    document.querySelectorAll('.closet-cat-phone .co-ui').forEach(initClosetCat);
+    document.querySelectorAll('.closet-add-phone .co-ui').forEach(initClosetAdd);
+    initCompare();
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();
+</script>
+</body></html>
+<style id="__om-edit-overrides">
+</style>

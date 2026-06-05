@@ -1,9 +1,11 @@
 import dynamic from "next/dynamic";
+import type { ReactNode } from "react";
 import { AppShell } from "@/components/AppShell";
 import { SectionTracker } from "@/components/SectionTracker";
+import type { LandingVariant } from "@/lib/analytics";
 import { Footer } from "../Footer";
 import { HeroB } from "./HeroB";
-import { PainB } from "./PainB";
+import { PainB, type PainCard } from "./PainB";
 import { MannequinB } from "./MannequinB";
 import { ComparisonB } from "./ComparisonB";
 import { FinalCtaB } from "./FinalCtaB";
@@ -11,27 +13,54 @@ import { FinalCtaB } from "./FinalCtaB";
 const CoordiDemo = dynamic(() => import("./CoordiDemo"));
 const ClosetDemo = dynamic(() => import("./ClosetDemo"));
 
-export function LandingBodyB() {
+type Props = {
+  variant: LandingVariant;
+  heroHeadline?: ReactNode;
+  heroSub?: ReactNode;
+  painHeadline?: ReactNode;
+  painCards?: ReadonlyArray<PainCard>;
+  // /b = coordi-first, /a = closet-first
+  demoOrder?: "coordi-first" | "closet-first";
+};
+
+export function LandingBodyB({
+  variant,
+  heroHeadline,
+  heroSub,
+  painHeadline,
+  painCards,
+  demoOrder = "coordi-first",
+}: Props) {
+  const closetSection = (
+    <SectionTracker key="closet" section="closet_demo" variant={variant}>
+      <ClosetDemo />
+    </SectionTracker>
+  );
+  const coordiSection = (
+    <SectionTracker key="coordi" section="coordi_demo" variant={variant}>
+      <CoordiDemo />
+    </SectionTracker>
+  );
+  const demos =
+    demoOrder === "closet-first"
+      ? [closetSection, coordiSection]
+      : [coordiSection, closetSection];
+
   return (
     <AppShell>
       <main className="min-h-screen">
-        <HeroB />
-        <SectionTracker section="pain" variant="b">
-          <PainB />
+        <HeroB headline={heroHeadline} sub={heroSub} />
+        <SectionTracker section="pain" variant={variant}>
+          <PainB headline={painHeadline} cards={painCards} />
         </SectionTracker>
-        <SectionTracker section="coordi_demo" variant="b">
-          <CoordiDemo />
-        </SectionTracker>
-        <SectionTracker section="closet_demo" variant="b">
-          <ClosetDemo />
-        </SectionTracker>
-        <SectionTracker section="mannequin" variant="b">
+        {demos}
+        <SectionTracker section="mannequin" variant={variant}>
           <MannequinB />
         </SectionTracker>
-        <SectionTracker section="comparison" variant="b">
+        <SectionTracker section="comparison" variant={variant}>
           <ComparisonB />
         </SectionTracker>
-        <SectionTracker section="final_cta" variant="b">
+        <SectionTracker section="final_cta" variant={variant}>
           <FinalCtaB />
         </SectionTracker>
       </main>

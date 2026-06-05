@@ -5,7 +5,7 @@ export default function PageB() {
   return (
     <>
       <AnalyticsProvider variant="b" />
-      <LandingBodyB />
+      <LandingBodyB variant="b" demoOrder="coordi-first" />
     </>
   );
 }
