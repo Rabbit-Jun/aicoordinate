@@ -1,12 +1,16 @@
-type Card = {
+import type { ReactNode } from "react";
+
+export type PainCard = {
   lead: string;
   body: string;
   tone: "yellow" | "blue" | "green";
 };
 
+// 기본 카피 = /b. /a에서는 props로 override.
+const DEFAULT_HEADLINE: ReactNode = "매일 아침 옷 걱정 쉽지 않죠?";
+
 // FIXES 7번: c-yellow/c-blue/c-green → globals.css에 surface-yellow/blue/green 토큰 정식 등록 후 매핑.
-// Tailwind alpha modifier(/10)는 var() hex 토큰과 호환 안 되어 무색 문제 발생 → 디자인 hex를 토큰화하는 게 정공법.
-const CARDS: ReadonlyArray<Card> = [
+const DEFAULT_CARDS: ReadonlyArray<PainCard> = [
   {
     lead: "“옷장에 옷은 많은데, 결국 늘 입던 그 조합”",
     body: "이제는 새로운 코디를 입고 싶어요ㅠㅠ",
@@ -24,21 +28,29 @@ const CARDS: ReadonlyArray<Card> = [
   },
 ];
 
-const TONE_BG: Record<Card["tone"], string> = {
+const TONE_BG: Record<PainCard["tone"], string> = {
   yellow: "bg-surface-yellow",
   blue: "bg-surface-blue",
   green: "bg-surface-green",
 };
 
-export function PainB() {
+type Props = {
+  headline?: ReactNode;
+  cards?: ReadonlyArray<PainCard>;
+};
+
+export function PainB({
+  headline = DEFAULT_HEADLINE,
+  cards = DEFAULT_CARDS,
+}: Props = {}) {
   return (
     <section className="bg-background">
       <div className="mx-auto max-w-3xl px-6 py-20 sm:py-24">
         <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-balance text-foreground text-center">
-          매일 아침 옷 걱정 쉽지 않죠?
+          {headline}
         </h2>
         <ul className="mt-10 flex flex-col gap-4">
-          {CARDS.map((c) => (
+          {cards.map((c) => (
             <li
               key={c.lead}
               className={`rounded-2xl border border-border p-5 sm:p-6 ${TONE_BG[c.tone]}`}
