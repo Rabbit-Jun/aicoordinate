@@ -2,6 +2,7 @@
 
 import { useRef, type ReactNode } from "react";
 import { useSectionViewed } from "@/hooks/useSectionViewed";
+import { useSectionTime } from "@/hooks/useSectionTime";
 import type { LandingVariant, SectionName } from "@/lib/analytics";
 
 // server 섹션도 ref 달기 위한 client wrapper. children을 그대로 렌더하고
@@ -18,5 +19,6 @@ export function SectionTracker({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   useSectionViewed(ref, section, variant);
+  useSectionTime(ref, section, variant);
   return <div ref={ref}>{children}</div>;
 }
