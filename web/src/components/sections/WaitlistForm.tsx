@@ -19,7 +19,7 @@ type Props = {
   theme?: Theme;
   ctaText?: string;
   onSuccess?: () => void;
-  pricingIntent?: "free" | "subscribe" | null;
+  pricingIntent?: "free" | null;
 };
 
 export function WaitlistForm({

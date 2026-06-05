@@ -265,7 +265,7 @@ function ComparisonTable() {
         </tbody>
       </table>
       <div className="bg-accent text-accent-foreground px-6 py-4 text-center text-sm font-semibold">
-        🎁 가입 시 코디 10개 무료
+        🎁 가입 시 코디 30개 무료
       </div>
     </div>
   );

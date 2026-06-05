@@ -8,11 +8,10 @@ import {
   type ReactNode,
 } from "react";
 import { EmailModal } from "./EmailModal";
-
-export type PlanChoice = "free" | "subscribe";
+import type { ModalEntry } from "@/lib/analytics";
 
 type ModalCtx = {
-  openModal: (plan?: PlanChoice) => void;
+  openModal: (entry: ModalEntry) => void;
 };
 
 const Ctx = createContext<ModalCtx | null>(null);
@@ -27,10 +26,10 @@ export function useEmailModal(): ModalCtx {
 
 export function AppShell({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [initialPlan, setInitialPlan] = useState<PlanChoice | null>(null);
+  const [entry, setEntry] = useState<ModalEntry>("hero");
 
-  const openModal = useCallback((p?: PlanChoice) => {
-    setInitialPlan(p ?? null);
+  const openModal = useCallback((e: ModalEntry) => {
+    setEntry(e);
     setIsOpen(true);
   }, []);
 
@@ -41,11 +40,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   return (
     <Ctx.Provider value={{ openModal }}>
       {children}
-      <EmailModal
-        isOpen={isOpen}
-        onClose={closeModal}
-        initialPlan={initialPlan}
-      />
+      <EmailModal isOpen={isOpen} onClose={closeModal} entry={entry} />
     </Ctx.Provider>
   );
 }

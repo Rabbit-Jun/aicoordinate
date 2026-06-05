@@ -2,6 +2,20 @@ import * as amplitude from "@amplitude/unified";
 import { getPublicEnv } from "./env";
 
 export type LandingVariant = "default" | "a" | "b";
+export type ModalEntry =
+  | "hero"
+  | "pricing"
+  | "final_cta"
+  | "coordi_demo"
+  | "closet_demo";
+export type SectionName =
+  | "pain"
+  | "coordi_demo"
+  | "closet_demo"
+  | "mannequin"
+  | "comparison"
+  | "final_cta";
+export type ModalStep = "email" | "done";
 
 export type AnalyticsEvent =
   | { name: "landing_viewed"; props?: { variant?: LandingVariant } }
@@ -9,7 +23,12 @@ export type AnalyticsEvent =
   | { name: "waitlist_submit_attempt"; props?: Record<string, unknown> }
   | { name: "waitlist_submitted"; props?: Record<string, unknown> }
   | { name: "waitlist_failed"; props: { reason: string } }
-  | { name: "plan_selected"; props: { plan: "free" | "subscribe" } };
+  // 구독 흐름 폐기(2026-06-01). plan은 항상 "free", entry는 CTA 출처. 기존 퍼널 차트 호환 위해 이벤트명 유지.
+  | { name: "plan_selected"; props: { plan: "free"; entry: ModalEntry } }
+  // /b 분석 이벤트 (단계 4)
+  | { name: "section_viewed"; props: { section: SectionName; variant: LandingVariant } }
+  | { name: "modal_step_viewed"; props: { step: ModalStep; entry: ModalEntry } }
+  | { name: "modal_closed"; props: { step: ModalStep; entry: ModalEntry } };
 
 let initialized = false;
 
