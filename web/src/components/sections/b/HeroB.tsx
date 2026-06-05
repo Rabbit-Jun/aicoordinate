@@ -2,7 +2,7 @@ import { HeroBStartButton } from "./HeroBStartButton";
 
 export function HeroB() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-surface-warm to-background">
+    <section className="relative overflow-hidden bg-white">
       <div className="mx-auto max-w-3xl px-6 pt-20 pb-16 sm:pt-28 sm:pb-20 text-center">
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-balance leading-[1.2] text-foreground">
           옷장에 옷은 많은데,

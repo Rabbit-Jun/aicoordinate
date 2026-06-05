@@ -67,7 +67,7 @@ export function Hero({
   subheadline = DEFAULT_SUBHEADLINE,
 }: HeroProps = {}) {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-surface-warm to-background">
+    <section className="relative overflow-hidden bg-white">
       <div className="mx-auto max-w-6xl px-6 pt-20 pb-16 sm:pt-28 sm:pb-20 lg:pt-32">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
           <div className="text-center lg:text-left">
