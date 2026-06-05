@@ -31,8 +31,29 @@ export type AnalyticsEvent =
   | { name: "modal_closed"; props: { step: ModalStep; entry: ModalEntry } };
 
 let initialized = false;
+let trackingDisabled = false;
+
+// 명시적 킬스위치. 호출 즉시 모든 후속 init/track 차단.
+export function setTrackingDisabled(disabled: boolean): void {
+  trackingDisabled = disabled;
+}
+
+// pathname 자동 차단 — /a/dev, /b/dev 등 내부 열람용 라우트에서
+// AnalyticsProvider가 우연히 포함되더라도 SDK init / 이벤트 발사 모두 차단.
+function isOnDevRoute(): boolean {
+  if (typeof window === "undefined") return false;
+  return /\/dev(?:\/|$)/.test(window.location.pathname);
+}
+
+function isTrackingDisabled(): boolean {
+  return trackingDisabled || isOnDevRoute();
+}
 
 export function initAnalytics(): void {
+  if (isTrackingDisabled()) {
+    console.debug("[dev] Amplitude init skipped (dev route or killswitch)");
+    return;
+  }
   if (initialized || typeof window === "undefined") return;
   try {
     const env = getPublicEnv();
@@ -49,6 +70,10 @@ export function initAnalytics(): void {
 }
 
 export function track(event: AnalyticsEvent): void {
+  if (isTrackingDisabled()) {
+    console.debug("[dev] event:", event.name, event.props);
+    return;
+  }
   if (!initialized) return;
   amplitude.track(event.name, event.props);
 }
